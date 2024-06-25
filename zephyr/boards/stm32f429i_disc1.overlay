@@ -1,13 +1,22 @@
 
 / {
+    leds {
+        // Add Trigger on PG5
+        hcsr04_trigger: hcsr04_trig {
+            gpios = <&gpiog 5 GPIO_ACTIVE_HIGH>;
+        };
+        hcsr04_echo: hcsr04_ech {
+			gpios = <&gpiog 4 GPIO_ACTIVE_LOW>;
+        };
+    };
+
     aliases {
-        led0 = &green_led_3;
-        led1 = &red_led_4;
+        ultrasonictrigger = &hcsr04_trigger;
+        ultrasonicecho = &hcsr04_echo;
     };
 
     chosen {
         perso,bme680 = &bme680;
-        perso, hcsr04 = &hcsr04;
     };
 };
 
@@ -50,12 +59,4 @@
         reg = <0x77>;
         label = "BME680";
     };
-};
-
-&hcsr04 {
-    compatible = "elecfreaks,hc-sr04";
-    label = "HCSR04";
-    trig-gpios = <&gpio0 4 GPIO_ACTIVE_HIGH>;
-    echo-gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
-    status = "okay";
 };

@@ -9,6 +9,7 @@ Mettre en place un environnement de dev/tests avec sondes logicielles pour le te
 Mettre en place un environnement de dev/tests avec, par exemple CoppeliaSim et Python/ROS, génération de scénario et récupération des données de vol et de l’environnement simulé.  
 Différents travaux sont réalisés depuis plusieurs années avec l’ONERA sur des simulations utilisant de drones. Ces travaux utilisent d’anciens simulateurs difficiles à maintenir aujourd’hui, ce qui rend complexe la reproduction de certains résultats. Plusieurs exemples existent pour des applications spécifiques, comme avec le robot Poppy et ROS.
 
+La documentation de la partie "Simulation" est disponible dans le dossier LDR_Simulation
 
 ## Embarqué
 
@@ -51,19 +52,25 @@ CONFIG_SEGGER_RTT_BUFFER_SIZE_UP=4096
 
 Zephyr utilise RTT (Real-Time Transfer) comme moyen de transport principal pour SystemView, dans ce cas l'exportation des traces nécessite toujours l'utilisation d'un appareil J-Link car ZephyrOS ne supporte pas actuellement l'exportation des traces via d'autres moyens comme l'UART ou le réseau, qui pourraient permettre une transmission directe sans hardware spécifique.
 
-D’où l’intérêt d’utiliser un **J-Link Segger EDU** pour pouvoir exporter les traces de chaque thread et les afficher sur SEGGER SystemView.
+D’où l’intérêt d’utiliser un **J-Link Segger EDU** https://fr.farnell.com/segger/8-08-91-j-link-edu-mini/unit-d-education-cortex-m/dp/3106578?gross_price=true&CMP=KNC-GFR-GEN-SHOPPING-Catch-All-GA4-Other-Channel-Audiences-Test-03-Nov-23&mckv=_dc%7Cpcrid%7C%7Cplid%7C%7Ckword%7C%7Cmatch%7C%7Cslid%7C%7Cproduct%7C3106578%7Cpgrid%7C%7Cptaid%7C&gad_source=1&gclid=Cj0KCQjw3tCyBhDBARIsAEY0XNlGYtov5E70cmn43-1cGxXln7vgYtljY4FBiqdjiT4U-VoNwqK6bkgaAnjHEALw_wcB 
+
+pour pouvoir exporter les traces de chaque thread et les afficher sur SEGGER SystemView.
+
 Ce qu’il faut installer pour la réalisation de cette partie :
 
--	J-Link software 
--	SEGGER SystemView 
+-	J-Link software https://www.segger.com/downloads/jlink/
+-	SEGGER SystemView https://www.segger.com/downloads/systemview/ 
 
-# ⚠️ warning
 
 > [!WARNING]
-> Sélectionnez le protocole SWD pendant la connexion du J-Link, tout en laissant le reste des paramètres par défaut
+> Sélectionnez le protocole SWD pendant la connexion du J-Link, tout en laissant le reste des paramètres par défaut (comme sur l'image en dessous)
 
+![Terminal configuration](/assets/images/Image2.jpg "connecting to J-Link")
 
 Après avoir exécuter le code sur VSCode, et connecter le J-Link, les traces seront affichées en commençant l’enregistrement sur l’interface graphique de SEGGER SystemView.
+
+![SystemView traces](/assets/images/Image1.png "traces des threads")
+
 
 **A quoi servent les traces ?**
 
@@ -80,54 +87,38 @@ RT-Thread Contraintes de TraceX
 -	TraceX présente les contraintes suivantes :
 -	TraceX ne peut pas mesurer avec précision les intervalles entre les événements supérieurs à la période de la minuterie.
 
-*[lien pour installer TraceX](.https://www.rt-thread.org/download/rttdoc_1_0_0/group___hook.html)* 
+![Traces sur TraceX](/assets/images/Image3.png "Azure RTOS TraceX")
 
-## Simulation
-**La restitution des avantages/inconvénients**
+**Tableau pour ajouter de nouvelles architectures au projet PlatformIO : autres cartes ST, RISC-V**
 
-La simulation c’est la création d’un modèle virtuel d’une machine, tout en prenant en considération l’environnement de travail et tous les autres facteurs influents. Ça nous permet de savoir si la conception peut fonctionner après la fabrication. Ça nous permet de tester différentes machines/algorithmes dans un même environnement (plusieurs drones dans un parc urbain et voir comment chaque drone navigue entre les arbres et réagit aux obstacles), et de tester une machine dans différents environnements (simuler un seul modèle de drone au-dessus d'une forêt avec des vents variables, dans un désert avec des températures élevées ou à l’intérieur de la maison).
-
-Comparaison entre CoppeliaSim et GazeboSim qui sont tous deux des simulateurs de robotique mais avec des caractéristiques distinctes, L’objectif de cette comparaison est de déterminer le simulateur le plus adapté à nos besoins.
-
- TABLEAU
-
-**Les besoins** 
--	Un simulateur qui a l’interface graphique de coppeliasim mais qu’on pourra utiliser comme Gazebo, c’est-à-dire on pourra créer notre scène sur un fichier et avoir un seul dossier qui contient notre projet, on pourra lancer le projet dans un terminal sans ouvrir le simulateur avant.
--	Un simulateur facile à installer sur windows de preférence (car sur linux certaines exécutions bug). 
--	Un simulateur avec un facteur temps réel faible.
-
-# ⚠️ warning
-gitlens
-remplacer while ready par un semaphore risque
-
-> **Note:** Assurez-vous de lire attentivement cette section et de suivre les conseils fournis pour éviter tout problème potentiel.
-
-|   Emoji   |   Nom |   Hex |   Dec |   Prix    |
-|---    |:-:    |:-:    |:-:    |--:    |
-|   &#x1F600;   |   GRINNING FACE   |   ```&#x1F600;``` |   ```&#128512;``` |   0.05 €  |
-|   &#x1F602;   |   FACE WITH TEARS OF JOY  |   ```&#x1F602;``` |   ```&#128514;``` |   0.12 €  |
-|   &#x1F923;   |   ROLLING ON THE FLOOR LAUGHING   |   ```&#x1F923;``` |   ```&#129315;``` |   0.09 €  |
-
-> #### The quarterly results look great!
->
-> - Revenue was off the chart.
-> - Profits were higher than ever.
->
->  *Everything* is going according to **plan**.
-
-I love supporting the **[EFF](https://eff.org)**.
-This is the *[Markdown Guide](https://www.markdownguide.org)*.
-See the section on [`code`](#code).
-
-![The San Juan Mountains are beautiful!](/assets/images/image1.png "San Juan Mountains")
-*A single track trail outside of Albuquerque, New Mexico.*
-
-> :warning: **Warning:** Do not push the big red button.
+| RISC-V Boards  | Zephyr version|  Platformio |  Zephyr + PlatformIO |   Prix|
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+|  Seeed Studio XIAO ESP32C3 |   		✅   |  ✅    | ❌ https://docs.platformio.org/en/stable/boards/espressif32/seeed_xiao_esp32c3.html |  5,96 € |
+|  TTGO T-OI PLUS RISC-V ESP32-C3 | ✅  |   ✅ | ❌ https://docs.platformio.org/en/stable/boards/espressif32/ttgo-t-oi-plus.html  | $5.50  |
+| Espressif ESP32-C3-DevKitM-1  | ✅  |  ✅ | ❌https://docs.platformio.org/en/stable/boards/espressif32/esp32-c3-devkitm-1.html |  15,90 € TTC |
+| Espressif ESP32-C3-DevKitC-02  | ✅  | ✅  |  ❌https://docs.platformio.org/en/stable/boards/espressif32/esp32-c3-devkitc-02.html |  23,66 € |
+|DFRobot Beetle ESP32-C3  | ✅  | ✅  |  ❌https://docs.platformio.org/en/stable/boards/espressif32/dfrobot_beetle_esp32c3.html#dfrobot-beetle-esp32-c3 |  10,50 € TTC |
+| GAPuino GAP8  |❌   | ✅  |  ❌ Un kit orienté IA https://docs.platformio.org/en/stable/boards/riscv_gap/gapuino.html |   230 €|
+   |
 
 
-> :memo: **Note:** Sunrises are beautiful.
+**Application réelle**
 
+Créer un parking system, le vrai but derrière c'est de réussir à rajouter le plus de composants possibles (capteurs, actionneurs...) sur le projet ZephyrOS déjà existant.
 
-> :bulb: **Tip:** Remember to appreciate the little things in life.
+***Explication sur le parking system***
+À l'entrée du système de stationnement, un scanner permet de détecter l'arrivée d'un véhicule. Une fois que l'ISR est déclenché, un mot de passe est envoyé au système et s'il correspond au mot de passe correct, le portail s'ouvre pour permettre au véhicule d'entrer. Dans le cas contraire, le portail reste verrouillé. Si le véhicule entre dans le parking, le nombre de places de parking est mis à jour. S'il n'y a pas de place de parking disponible, le système enverra le message "Parking non disponible" afin que les gens gagnent du temps.
+Capteur ultrason n’utilise pas d’interface de communication (I2C ou UART), ils utilisent généralement que des broches GPIO pour se connecter.
+Pour pouvoir rajouter le capteur de distance à notre projet zephyr, il faut créer un driver puisqu’il n’existe pas encore 
 
-[!WARNING] coucou 
+à rajouter dans le .overlay du projet 
+
+```js
+&hcsr04 {
+    compatible = "elecfreaks,hc-sr04";
+    label = "HCSR04";
+    trig-gpios = <&gpio0 4 GPIO_ACTIVE_HIGH>;
+    echo-gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
+    status = "okay";
+};
+```

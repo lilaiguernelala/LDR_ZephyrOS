@@ -1,8 +1,3 @@
-+++
-title = 'Rapport de stage - IGUERNELALA Lila'
-draft = false
-date = 2024-06-04
-+++
 
 ## Introduction
 Dans le cadre des travaux de recherche menés au LDR sur les plateformes embarquées, les chercheurs souhaitent mettre en place des environnements de développements et de tests plus récents et robustes pour 2 applications en particulier, dans l’ordre d’importance :  
@@ -45,11 +40,13 @@ Modifier le fichier .conf de notre projet NoGUI en ajoutant les lignes
 **code**
 
 ```c++
+
 CONFIG_TRACING=y
 CONFIG_SEGGER_SYSTEMVIEW=y
 CONFIG_SEGGER_SYSTEMVIEW_BOOT_ENABLE=n
 CONFIG_SEGGER_SYSVIEW_POST_MORTEM_MODE=n
 CONFIG_SEGGER_RTT_BUFFER_SIZE_UP=4096
+
 ```
 
 Zephyr utilise RTT (Real-Time Transfer) comme moyen de transport principal pour SystemView, dans ce cas l'exportation des traces nécessite toujours l'utilisation d'un appareil J-Link car ZephyrOS ne supporte pas actuellement l'exportation des traces via d'autres moyens comme l'UART ou le réseau, qui pourraient permettre une transmission directe sans hardware spécifique.
@@ -83,7 +80,7 @@ RT-Thread Contraintes de TraceX
 -	TraceX présente les contraintes suivantes :
 -	TraceX ne peut pas mesurer avec précision les intervalles entre les événements supérieurs à la période de la minuterie.
 
-https://www.rt-thread.org/download/rttdoc_1_0_0/group___hook.html 
+*[lien pour installer TraceX](.https://www.rt-thread.org/download/rttdoc_1_0_0/group___hook.html)* 
 
 ## Simulation
 **La restitution des avantages/inconvénients**

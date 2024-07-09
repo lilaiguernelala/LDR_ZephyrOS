@@ -44,12 +44,13 @@ int main(void)
 		display.chart_add_temperature(bme680.get_temperature());
 		display.chart_add_humidity(bme680.get_humidity());
 
-		sprintf(text, "T:%d.%02d°C \t H:%d.%02d\%\t A:%04d",
+		sprintf(text, "T:%d.%02d°C \t H:%d.%02d\%\t A:%dcm",
 				bme680.temperature.val1, bme680.temperature.val2 / 10000,
-				bme680.humidity.val1, bme680.humidity.val2 / 10000, ultrasonic.get_distance());
+				bme680.humidity.val1, bme680.humidity.val2 / 10000, ultrasonic.get_distance().val1);
 		display.text_add(text);
 		LOG_INF("%s\n", text);
 
 		k_msleep(lv_task_handler());
+		k_msleep(1000);
 	}
 }

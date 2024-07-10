@@ -9,11 +9,8 @@
 */
 
 #include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(app);
-
-
-
+#include <stdio.h>
+#include <string.h>
 
 #include "display.hpp"
 #include "bme680.hpp"
@@ -54,6 +51,6 @@ int main(void)
 		LOG_INF("%s\n", text);
 
 		k_msleep(lv_task_handler());
-		k_msleep(1000);
+		//k_msleep(500);
 	}
 }

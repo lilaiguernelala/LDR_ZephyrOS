@@ -1,6 +1,6 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(app);
+//LOG_MODULE_REGISTER(app);
 
 #include "display.hpp"
 #include "bme680.hpp"

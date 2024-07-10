@@ -1,21 +1,23 @@
 #ifndef HCSR04_HPP
 #define HCSR04_HPP
 
+#include <zephyr/kernel.h>
+#include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/sensor.h>
 
-#define ULTRASONIC_DEV DT_CHOSEN(HCSR04) 
+//#define ULTRASONIC_DEV DT_CHOSEN(HCSR04) 
 //  utiliser DT_ALIAS(ultrasonic) 
 
 class myUltrasonicSensor
 {
 public:
-    const struct device *dev;
+    double distance_d; 
+    struct sensor_value distance;
 
-    double distance; 
-
-    void init();
+    int init();
 
     void update_distance();
-    double get_distance();
+    struct sensor_value get_distance();
 };
+
 #endif

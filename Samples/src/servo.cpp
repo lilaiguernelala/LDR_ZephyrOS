@@ -12,7 +12,7 @@ void init_servo() {
 }
 
 void update_servo(uint32_t &pulse_width, enum direction &dir) {
-    int ret = pwm_set_pulse_dt(&servo, pulse_width);
+    /*int ret = pwm_set_pulse_dt(&servo, pulse_width);
     if (ret < 0) {
         LOG_ERR("Failed to set pulse width for servo");
         return;
@@ -31,5 +31,5 @@ void update_servo(uint32_t &pulse_width, enum direction &dir) {
             dir = DOWN;
             pulse_width = max_pulse;
         }
-    }
+    }*/
 }

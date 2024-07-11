@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    main.c
+  * @file    main.cpp
   * @author  P. COURBIN
   * @version V2.0
   * @date    08-12-2023
@@ -15,6 +15,7 @@
 #include "display.hpp"
 #include "bme680.hpp"
 #include "hcsr04.hpp"
+#include "servo.hpp"
 
 #define LOG_LEVEL CONFIG_LOG_DEFAULT_LEVEL
 #include <zephyr/logging/log.h>
@@ -26,31 +27,59 @@ myUltrasonicSensor ultrasonic;
 
 int main(void)
 {
-	char text[50] = {0};
+    char text[50] = {0};
+    uint32_t pulse_width = min_pulse;
+    enum direction dir = UP;
+    int ret;
 
-	display.init(true);
-	bme680.init();
+    display.init(true);
+    bme680.init();
     ultrasonic.init();
+    init_servo();  
 
-	lv_task_handler();
-	display_blanking_off(display.dev);
+    lv_task_handler();
+    display_blanking_off(display.dev);
 
-	while (1)
-	{
-		bme680.update_values();
+    while (1)
+    {
+        bme680.update_values();
         ultrasonic.update_distance();
 
-		display.task_handler();
-		display.chart_add_temperature(bme680.get_temperature());
-		display.chart_add_humidity(bme680.get_humidity());
+        display.task_handler();
+        display.chart_add_temperature(bme680.get_temperature());
+        display.chart_add_humidity(bme680.get_humidity());
 
-		sprintf(text, "T:%d.%02d°C \t H:%d.%02d\%\t A:%dcm",
-				bme680.temperature.val1, bme680.temperature.val2 / 10000,
-				bme680.humidity.val1, bme680.humidity.val2 / 10000, ultrasonic.get_distance().val1);
-		display.text_add(text);
-		LOG_INF("%s\n", text);
+        sprintf(text, "T:%d.%02d°C \t H:%d.%02d\%\t A:%dcm",
+                bme680.temperature.val1, bme680.temperature.val2 / 10000,
+                bme680.humidity.val1, bme680.humidity.val2 / 10000, ultrasonic.get_distance().val1);
+        display.text_add(text);
+        LOG_INF("%s\n", text);
 
-		k_msleep(lv_task_handler());
-		//k_msleep(500);
-	}
+        k_msleep(lv_task_handler());
+        k_msleep(1000);
+
+        // Control servo
+        ret = pwm_set_pulse_dt(&servo, pulse_width);
+        if (ret < 0) {
+            LOG_ERR("Failed to set pulse width for servo");
+            return -1;
+        }
+
+        if (dir == DOWN) {
+            if (pulse_width <= min_pulse) {
+                dir = UP;
+                pulse_width = min_pulse;
+            } else {
+                pulse_width -= STEP;
+            }
+        } else {
+            pulse_width += STEP;
+
+            if (pulse_width >= max_pulse) {
+                dir = DOWN;
+                pulse_width = max_pulse;
+            }
+        }
+    }
+    return 0;
 }

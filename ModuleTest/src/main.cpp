@@ -1,12 +1,7 @@
-/**
-  ******************************************************************************
-  * @file    main.c
-  * @author  P. COURBIN
-  * @version V2.0
-  * @date    08-12-2023
-  * @brief   Sample version
-  ******************************************************************************
-*/
+/*
+ * Copyright (c) 2024 Pierre COURBIN
+ * 
+ */
 
 #include <zephyr/kernel.h>
 #include <stdio.h>
@@ -14,51 +9,49 @@
 
 #include <sensor/hc_sr04/hc_sr04.h>
 
-#include "bme680.hpp"
-
 #define LOG_LEVEL CONFIG_LOG_DEFAULT_LEVEL
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(app);
 
-const struct device *hc_sr04_dev;
-myBME680 bme680;
-
-void measure(void)
+struct sensor_value measure(const struct device *dev)
 {
-	static struct sensor_value distance;
+	struct sensor_value distance = {-1, 0};
 	int ret;
 
-	ret = sensor_sample_fetch(hc_sr04_dev);
-	if (ret != 0) {
-		LOG_ERR("Cannot take measurement: %d", ret);
-	} else {
-		sensor_channel_get(hc_sr04_dev, SENSOR_CHAN_DISTANCE, &distance);
-		LOG_INF("Distance: %d.%06d cm", distance.val1, distance.val2);
+	ret = sensor_sample_fetch(dev);
+	if (ret != 0)
+	{
+		LOG_ERR("%s - Cannot take measurement: %d", dev->name, ret);
 	}
+	else
+	{
+		sensor_channel_get(dev, SENSOR_CHAN_DISTANCE, &distance);
+		LOG_INF("%s - Distance: %d.%06d cm", dev->name, distance.val1, distance.val2);
+	}
+	return distance;
 }
 
 int main(void)
 {
 	char text[50] = {0};
 
-	bme680.init();
+	const struct device *hc_sr04_dev0 = DEVICE_DT_GET(DT_NODELABEL(us0));
+	__ASSERT(hc_sr04_dev0 == NULL, "Failed to get device binding");
+	struct sensor_value distance0 = {0, 0};
 
-	//hc_sr04_dev = DEVICE_DT_GET_ANY(zephyr_hc_sr04);
-	//__ASSERT(hc_sr04_dev == NULL, "Failed to get device binding");
-
-	hc_sr04_dev = DEVICE_DT_GET(DT_CHOSEN(perso_us0));
-	__ASSERT(hc_sr04_dev == NULL, "Failed to get device binding");
+	const struct device *hc_sr04_dev1 = DEVICE_DT_GET(DT_NODELABEL(us1));
+	__ASSERT(hc_sr04_dev1 == NULL, "Failed to get device binding");
+	struct sensor_value distance1 = {0, 0};
 
 	while (1)
 	{
-		bme680.update_values();
+		distance0 = measure(hc_sr04_dev0);
+		distance1 = measure(hc_sr04_dev1);
 
-		sprintf(text, "T:%d.%02d°C \t H:%d.%02d\%",
-				bme680.temperature.val1, bme680.temperature.val2 / 10000,
-				bme680.humidity.val1, bme680.humidity.val2 / 10000);
+		sprintf(text, "US0:%d.%02dcm \t US1:%d.%02dcm",
+				distance0.val1, distance0.val2,
+				distance1.val1, distance1.val2);
 		printf("%s\n", text);
-
-		measure();
-		k_msleep(200);
+		k_msleep(1000);
 	}
 }

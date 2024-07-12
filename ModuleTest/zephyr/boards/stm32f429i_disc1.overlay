@@ -1,20 +1,15 @@
 / {
-    ultrason0: hc-sr04 {
+    us0: hc-sr04_0 {
         compatible = "zephyr,hc-sr04";
         trig-gpios = <&gpiog 5 GPIO_ACTIVE_HIGH>;
         echo-gpios = <&gpiog 4 GPIO_ACTIVE_HIGH>;
         status = "okay";
     };
 
-    chosen {
-        perso,bme680 = &bme680;
-        perso,us0 = &ultrason0;
-    };
-};
-
-&i2c3 {
-    bme680: bme680@77 {
-        compatible = "bosch,bme680";
-        reg = <0x77>;
+    us1: hc-sr04_1 {
+        compatible = "zephyr,hc-sr04";
+        trig-gpios = <&gpiog 2 GPIO_ACTIVE_HIGH>;
+        echo-gpios = <&gpiog 3 GPIO_ACTIVE_HIGH>;
+        status = "okay";
     };
 };

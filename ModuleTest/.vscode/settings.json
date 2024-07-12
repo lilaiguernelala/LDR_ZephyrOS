@@ -1,0 +1,9 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "gpio.h": "c",
+        "sensor.h": "c",
+        "device.h": "c",
+        "log.h": "c"
+    }
+}

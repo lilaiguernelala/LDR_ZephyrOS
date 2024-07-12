@@ -6,29 +6,6 @@
         status = "okay";
     };
 
-    leds {
-        // Add Trigger on PG5
-        hcsr04_trigger: hcsr04_trig {
-            gpios = <&gpiog 5 GPIO_ACTIVE_LOW>;
-        };
-        hcsr04_echo: hcsr04_ech {
-            gpios = <&gpiog 4 GPIO_ACTIVE_LOW>;
-        };
-    };
-
-    // Define the servo node with a unique label
-    servo: servo {
-        compatible = "pwm-servo";
-        pwms = <&pwm4 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
-        min-pulse = <PWM_USEC(700)>;
-        max-pulse = <PWM_USEC(2500)>;
-    };
-
-    aliases {
-        ultrasonictrigger = &hcsr04_trigger;
-        ultrasonicecho = &hcsr04_echo;
-    };
-
     chosen {
         perso,bme680 = &bme680;
         perso,us0 = &ultrason0;
@@ -41,16 +18,3 @@
         reg = <0x77>;
     };
 };
-
-&timers4 {
-    status = "okay";
-    st,prescaler = <1000>;
-
-    pwm4: pwm {
-        status = "okay";
-        pinctrl-0 = <&tim4_ch4_pd15>;
-        pinctrl-names = "default";
-    };
-};
-
-

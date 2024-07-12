@@ -43,7 +43,10 @@ int main(void)
 
 	bme680.init();
 
-	hc_sr04_dev = DEVICE_DT_GET_ANY(zephyr_hc_sr04);
+	//hc_sr04_dev = DEVICE_DT_GET_ANY(zephyr_hc_sr04);
+	//__ASSERT(hc_sr04_dev == NULL, "Failed to get device binding");
+
+	hc_sr04_dev = DEVICE_DT_GET(DT_CHOSEN(perso_us0));
 	__ASSERT(hc_sr04_dev == NULL, "Failed to get device binding");
 
 	while (1)

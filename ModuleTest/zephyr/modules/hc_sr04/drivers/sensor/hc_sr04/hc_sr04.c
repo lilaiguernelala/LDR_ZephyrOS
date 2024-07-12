@@ -174,10 +174,10 @@ static int hc_sr04_sample_fetch(const struct device *dev, enum sensor_channel ch
     /* Convert from ticks to nanoseconds and then to microseconds */
     count = k_cyc_to_us_near32(count);
     if ((T_INVALID_PULSE_US > count) && (T_TRIG_PULSE_US < count)) {
-        /* Convert to meters and divide round-trip distance by two */
+        /* Convert to centimeters and divide round-trip distance by two */
         count = (count * METERS_PER_SEC / 2);
-        p_data->distance.val2 = (count % 1000000);
-        p_data->distance.val1 = (count / 1000000);
+        p_data->distance.val2 = (count % 10000);
+        p_data->distance.val1 = (count / 10000);
     } else {
         LOG_INF("Invalid measurement");
         p_data->distance.val1 = 0;

@@ -99,15 +99,15 @@ RT-Thread Contraintes de TraceX
 
 **Tableau pour ajouter de nouvelles architectures au projet PlatformIO : autres cartes ST, RISC-V**
 
-| RISC-V Boards  | Zephyr version|  Platformio |  Zephyr + PlatformIO |   Prix|
-| ------------ | ------------ | ------------ | ------------ | ------------ |
+| RISC-V Boards  | Zephyr version|  Platformio |  Zephyr + PlatformIO |  Prix  |
+| ------------   | ------------  | ----------  | -------------------- | ------ |
 |  Seeed Studio XIAO ESP32C3 |   		✅   |  ✅    | ❌  |  5,96 € |
 |  TTGO T-OI PLUS RISC-V ESP32-C3 | ✅  |   ✅ | ❌   | $5.50  |
 | Espressif ESP32-C3-DevKitM-1  | ✅  |  ✅ | ❌ |  15,90 € TTC |
 | Espressif ESP32-C3-DevKitC-02  | ✅  | ✅  |  ❌ |  23,66 € |
 |DFRobot Beetle ESP32-C3  | ✅  | ✅  |  ❌ |  10,50 € TTC |
 | GAPuino GAP8  |❌   | ✅  |  ❌ Un kit orienté IA  |   230 €|
-   |
+
 
 
 **Liens des documentations platformio de chacune des cartes précédentes :**

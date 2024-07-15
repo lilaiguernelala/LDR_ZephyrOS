@@ -1,5 +1,5 @@
 
-## Introduction
+# Introduction
 Dans le cadre des travaux de recherche menés au LDR sur les plateformes embarquées, les chercheurs souhaitent mettre en place des environnements de développements et de tests plus récents et robustes pour 2 applications en particulier, dans l’ordre d’importance :  
 
 - La programmation embarquée, en particulier avec OS Temps Réel. 
@@ -34,7 +34,7 @@ On peut également détecter les threads qui consomment trop de temps cela nous 
 Il nous permet de comprendre le comportement de threads entre eux, à quelle fréquence les ressources système sont utilisées, cela nous permet d’avoir un aperçu sur le fonctionnement interne du système
 Le tracing facilite l’analyse comparative et la reproductibilité des tests, on peut aussi vérifier si toutes les parties du code sont bien testées en conditions réelles
 
-**Les étapes à suivre pour récupérer des traces d’un code** 
+### Les étapes à suivre pour récupérer des traces d’un code 
 
 Modifier le fichier .conf de notre projet NoGUI en ajoutant les lignes 
 
@@ -99,7 +99,7 @@ RT-Thread Contraintes de TraceX
 
 ![Traces sur TraceX](/assets/images/Image3.png "Azure RTOS TraceX")
 
-**Tableau pour ajouter de nouvelles architectures au projet PlatformIO : autres cartes ST, RISC-V**
+### Tableau pour ajouter de nouvelles architectures au projet PlatformIO : autres cartes ST, RISC-V**
 
 | RISC-V Boards | Zephyr version| Platformio | Zephyr + PlatformIO |  Prix  |
 | ------------  | ------------  | ---------- | ------------------- | ------ |
@@ -134,7 +134,7 @@ RT-Thread Contraintes de TraceX
 
 
 
-**Application réelle**
+### Application réelle
 
 Créer un parking system, le vrai but derrière c'est de réussir à rajouter le plus de composants possibles (capteurs, actionneurs...) sur le projet ZephyrOS déjà existant.
 
@@ -142,6 +142,9 @@ Créer un parking system, le vrai but derrière c'est de réussir à rajouter le
 À l'entrée du système de stationnement, un scanner permet de détecter l'arrivée d'un véhicule. Une fois que l'ISR est déclenché, un mot de passe est envoyé au système et s'il correspond au mot de passe correct, le portail s'ouvre pour permettre au véhicule d'entrer. Dans le cas contraire, le portail reste verrouillé. Si le véhicule entre dans le parking, le nombre de places de parking est mis à jour. S'il n'y a pas de place de parking disponible, le système enverra le message "Parking non disponible" afin que les gens gagnent du temps.
 Capteur ultrason n’utilise pas d’interface de communication (I2C ou UART), ils utilisent généralement que des broches GPIO pour se connecter.
 Pour pouvoir rajouter le capteur de distance à notre projet zephyr, il faut créer un driver puisqu’il n’existe pas encore 
+
+
+ #### Capteur de distance HCSR04 
 
 à rajouter dans le fichier "overlay" du projet 
 
@@ -154,8 +157,10 @@ Pour pouvoir rajouter le capteur de distance à notre projet zephyr, il faut cr�
     status = "okay";
 };
 ```
-## PARTIE A COMPLETER (MODULE FAIT PAR MR COURBIN) 
+**PARTIE A COMPLETER (MODULE FAIT PAR MR COURBIN)**
 ***A completer***
+
+#### ServoMoteur FS90 
 
 **Ce qu'il faut modifier pour pouvoir rajouter un servomoteur à notre projet zephyr**
 
@@ -199,7 +204,7 @@ Dans le fichier overlay compatible = "pwm-servo" on doit avoir le meme nom que s
     };
 ```
 
-```js pinctrl-0 = <&tim1_ch3_pe13>;```  cette ligne veut dire: channel 4 sur le pin PD15
+```js pinctrl-0 = <&tim1_ch3_pe13>;```  cette ligne veut dire: channel 4 sur le pin PE13
 
 Activer le PWM dans le fichier prj.conf se fait avec la ligne suivante: CONFIG_PWM=y
 Rajouter cette bibliotheque #include <zephyr/drivers/pwm.h> dans le main principal 

@@ -110,7 +110,7 @@ RT-Thread Contraintes de TraceX
 
 
 
-**Liens des documentations platformio de chacune des cartes précédentes :**
+**Liens des documentations platformio de chacune des cartes précédentes**
 
 
 

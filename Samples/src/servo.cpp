@@ -32,7 +32,3 @@ void update_servo(uint32_t &pulse_width, enum direction &dir) {
         }
     }
 }
-
-
-
-

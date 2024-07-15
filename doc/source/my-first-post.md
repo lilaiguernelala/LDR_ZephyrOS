@@ -180,19 +180,19 @@ dans platformio : stm32f429i_disc1
 
 **Liens importants :**
 
-- Exemple d'un code servomoteur: https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/samples/basic/servo_motor
+- [Exemple d'un code servomoteur](https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/samples/basic/servo_motor)
 
-- Exemple du PWM: https://github.com/zephyrproject-rtos/zephyr
+- [Exemple du PWM](https://github.com/zephyrproject-rtos/zephyr)
 
-- Documentation du PWM: https://docs.zephyrproject.org/latest/reference/drivers/pwm.html 
+- [Documentation du PWM](https://docs.zephyrproject.org/latest/reference/drivers/pwm.html)
 
-- Exemple de la connectivité wifi de la carte stm32: https://github.com/gd91/stm32_winc1500_station_example
+- [Exemple de la connectivité wifi de la carte stm32](https://github.com/gd91/stm32_winc1500_station_example)
 
-- Création d'un driver hcsr04:  https://github.com/inductivekickback/hc-sr04/blob/main/nrf/drivers/sensor/hc_sr04/hc_sr04.c#L240
+- [Création d'un driver hcsr04](https://github.com/inductivekickback/hc-sr04/blob/main/nrf/drivers/sensor/hc_sr04/hc_sr04.c#L240)
 
-- Lien pour l'overlay du servomoteur: https://github.com/zephyrproject-rtos/zephyr/discussions/53924  
+- [Lien pour l'overlay du servomoteur](https://github.com/zephyrproject-rtos/zephyr/discussions/53924)  
 
-- Formule du servomoteur: https://stackoverflow.com/questions/12931115/algorithm-to-map-an-interval-to-a-smaller-interval
+- [Formule du servomoteur](https://stackoverflow.com/questions/12931115/algorithm-to-map-an-interval-to-a-smaller-interval)
 
 
 ***A retravailler***

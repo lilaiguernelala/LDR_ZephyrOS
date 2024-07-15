@@ -208,14 +208,16 @@ ensuite integrer le capteur de hcsr04 dans le driver
 
 **PS:** au moment de renommer un dossier, évitez les espaces ou caractères spéciaux 
 
-
 **A noter**
 Pour que le servomoteur compile, s'exécute correctement et réalise les tâches qu'on lui demande de faire, on ne doit pas l'intégrer à un projet qui contient déjà un Display, par contre il fonctionne bien avec d'autres composants à la fois mais il faut respecter certains paramêtres. 
 
 **Exemple:** 
 - Check la DOC de zephyr: 
+
+
 [DOC Zephyr](https://docs.zephyrproject.org/latest/samples/basic/servo_motor/README.html)
+
+
 The corresponding PWM pulse widths for a 0 to 180 degree range are 700 to 2300 microseconds, respectivel
 
-- Le code compile sans erreurs quand y a l'écran mais le servomoteur ne fonctionne pas, même s'il reçoit un signal (on entend un bruit).
-
+- Le code compile sans erreurs quand y a l'écran mais le servomoteur ne fonctionne pas, même s'il reçoit un signal (on entend un bruit)

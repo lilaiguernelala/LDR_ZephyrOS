@@ -33,11 +33,10 @@ On peut également détecter les threads qui consomment trop de temps cela nous 
 Il nous permet de comprendre le comportement de threads entre eux, à quelle fréquence les ressources système sont utilisées, cela nous permet d’avoir un aperçu sur le fonctionnement interne du système
 Le tracing facilite l’analyse comparative et la reproductibilité des tests, on peut aussi vérifier si toutes les parties du code sont bien testées en conditions réelles
 
-### Les étapes à suivre pour récupérer des traces d’un code 
+#### Les étapes à suivre pour récupérer des traces d’un code 
 
 Modifier le fichier .conf de notre projet NoGUI en ajoutant les lignes 
 
-**code**
 
 ```c++
 
@@ -98,7 +97,7 @@ RT-Thread Contraintes de TraceX
 
 ![Traces sur TraceX](/assets/images/Image3.png "Azure RTOS TraceX")
 
-#### Tableau pour ajouter de nouvelles architectures au projet PlatformIO : autres cartes ST, RISC-V
+### Tableau pour ajouter de nouvelles architectures au projet PlatformIO : autres cartes ST, RISC-V
 
 | RISC-V Boards | Zephyr version| Platformio | Zephyr + PlatformIO |  Prix  |
 | ------------  | ------------  | ---------- | ------------------- | ------ |

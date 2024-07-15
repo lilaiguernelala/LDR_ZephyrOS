@@ -111,7 +111,7 @@ Créer un parking system, le vrai but derrière c'est de réussir à rajouter le
 Capteur ultrason n’utilise pas d’interface de communication (I2C ou UART), ils utilisent généralement que des broches GPIO pour se connecter.
 Pour pouvoir rajouter le capteur de distance à notre projet zephyr, il faut créer un driver puisqu’il n’existe pas encore 
 
-à rajouter dans le .overlay du projet 
+à rajouter dans le fichier "overlay" du projet 
 
 ```js
 &hcsr04 {
@@ -122,3 +122,99 @@ Pour pouvoir rajouter le capteur de distance à notre projet zephyr, il faut cr�
     status = "okay";
 };
 ```
+## PARTIE A COMPLETER (MODULE FAIT PAR MR COURBIN) 
+***A completer***
+
+**Ce qu'il faut modifier pour pouvoir rajouter un servomoteur à notre projet zephyr**
+
+Les canaux de PWM sur le fichier overlay ça va de 0 à 3 et même si on écrit 4 il le prend comme un 3 par défaut directement. 
+
+pour rajouter un servomoteur à notre projet zephyrOS 
+créer un nouveau dossier dts/bindings et mettre dedans ce fichier .yaml : 
+
+```js
+description: PWM-driven servo motor.
+
+**compatible: "pwm-servo"**
+
+include: base.yaml
+
+properties:
+  pwms:
+    required: true
+    type: phandle-array
+    description: PWM specifier driving the servo motor.
+
+  min-pulse:
+    required: true
+    type: int
+    description: Minimum pulse width (nanoseconds).
+
+  max-pulse:
+    required: true
+    type: int
+    description: Maximum pulse width (nanoseconds).
+```
+
+Dans le fichier overlay compatible = "pwm-servo" on doit avoir le meme nom que sur le compatible de yaml
+
+```js
+    servo: servo {
+        **compatible = "pwm-servo";**
+        pwms = <&pwm1 3 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+        min-pulse = <PWM_USEC(700)>;
+        max-pulse = <PWM_USEC(2500)>;
+    };
+```
+
+```js pinctrl-0 = <&tim1_ch3_pe13>;```  cette ligne veut dire: channel 4 sur le pin PD15
+
+Activer le PWM dans le fichier prj.conf se fait avec la ligne suivante: CONFIG_PWM=y
+Rajouter cette bibliotheque #include <zephyr/drivers/pwm.h> dans le main principal 
+
+
+**PS :** Le nom de notre fichier overlay doit être le même que celui de notre board dans platformio.ini, ce n'est pas trop le même que celui de ZephyrOS
+
+dans ZephyrOS : disco_f429zi
+dans platformio : stm32f429i_disc1
+
+**Liens importants :**
+
+- Exemple d'un code servomoteur: https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/samples/basic/servo_motor
+
+- Exemple du PWM: https://github.com/zephyrproject-rtos/zephyr
+
+- Documentation du PWM: https://docs.zephyrproject.org/latest/reference/drivers/pwm.html 
+
+- Exemple de la connectivité wifi de la carte stm32: https://github.com/gd91/stm32_winc1500_station_example
+
+- Création d'un driver hcsr04:  https://github.com/inductivekickback/hc-sr04/blob/main/nrf/drivers/sensor/hc_sr04/hc_sr04.c#L240
+
+- Lien pour l'overlay du servomoteur: https://github.com/zephyrproject-rtos/zephyr/discussions/53924  
+
+- Formule du servomoteur: https://stackoverflow.com/questions/12931115/algorithm-to-map-an-interval-to-a-smaller-interval
+
+
+***A retravailler***
+code : //largeur de repetition c'est 20ms elle est choisie 2500 et 700 c'est la durée qu'il prend sur chaque coté en microseconde on peut la changer en fonction de la rapidité qu'on veut avoir
+elle va de 900 jusqu'à 2100 c'est une pulsation
+
+on peut changer la valeur de la pulsation en fonction de la rapidité qu'on veut avoir
+on peut changer la valeur de la largeur de repetition en fonction de la rapidité qu'on veut
+
+un code simple qui fonctionne tout seul sans pour autant l'integrer dans le dossier 
+ensuite integrer le capteur de hcsr04 dans le driver 
+***jusqu'ici***
+
+**PS:** au moment de renommer un dossier, évitez les espaces ou caractères spéciaux 
+
+
+**A noter**
+Pour que le servomoteur compile, s'exécute correctement et réalise les tâches qu'on lui demande de faire, on ne doit pas l'intégrer à un projet qui contient déjà un Display, par contre il fonctionne bien avec d'autres composants à la fois mais il faut respecter certains paramêtres. 
+
+**Exemple:** 
+- Check la DOC de zephyr: https://docs.zephyrproject.org/latest/samples/basic/servo_motor/README.html
+The corresponding PWM pulse widths for a 0 to 180 degree range are 700 to 2300 microseconds, respectivel
+
+- Le code compile sans erreurs quand y a l'écran mais le servomoteur ne fonctionne pas, même s'il reçoit un signal (on entend un bruit).
+

@@ -52,14 +52,22 @@ CONFIG_SEGGER_RTT_BUFFER_SIZE_UP=4096
 
 Zephyr utilise RTT (Real-Time Transfer) comme moyen de transport principal pour SystemView, dans ce cas l'exportation des traces nécessite toujours l'utilisation d'un appareil J-Link car ZephyrOS ne supporte pas actuellement l'exportation des traces via d'autres moyens comme l'UART ou le réseau, qui pourraient permettre une transmission directe sans hardware spécifique.
 
-D’où l’intérêt d’utiliser un **J-Link Segger EDU** https://fr.farnell.com/segger/8-08-91-j-link-edu-mini/unit-d-education-cortex-m/dp/3106578?gross_price=true&CMP=KNC-GFR-GEN-SHOPPING-Catch-All-GA4-Other-Channel-Audiences-Test-03-Nov-23&mckv=_dc%7Cpcrid%7C%7Cplid%7C%7Ckword%7C%7Cmatch%7C%7Cslid%7C%7Cproduct%7C3106578%7Cpgrid%7C%7Cptaid%7C&gad_source=1&gclid=Cj0KCQjw3tCyBhDBARIsAEY0XNlGYtov5E70cmn43-1cGxXln7vgYtljY4FBiqdjiT4U-VoNwqK6bkgaAnjHEALw_wcB 
+D’où l’intérêt d’utiliser un 
+
+
+[J-Link Segger EDU](https://fr.farnell.com/segger/8-08-91-j-link-edu-mini/unit-d-education-cortex-m/dp/3106578?gross_price=true&CMP=KNC-GFR-GEN-SHOPPING-Catch-All-GA4-Other-Channel-Audiences-Test-03-Nov-23&mckv=_dc%7Cpcrid%7C%7Cplid%7C%7Ckword%7C%7Cmatch%7C%7Cslid%7C%7Cproduct%7C3106578%7Cpgrid%7C%7Cptaid%7C&gad_source=1&gclid=Cj0KCQjw3tCyBhDBARIsAEY0XNlGYtov5E70cmn43-1cGxXln7vgYtljY4FBiqdjiT4U-VoNwqK6bkgaAnjHEALw_wcB)
+
+
 
 pour pouvoir exporter les traces de chaque thread et les afficher sur SEGGER SystemView.
 
 Ce qu’il faut installer pour la réalisation de cette partie :
 
--	J-Link software https://www.segger.com/downloads/jlink/
--	SEGGER SystemView https://www.segger.com/downloads/systemview/ 
+
+-	[J-Link software](https://www.segger.com/downloads/jlink/)
+
+
+-	[SEGGER SystemView](https://www.segger.com/downloads/systemview/)
 
 
 > [!WARNING]
@@ -93,13 +101,41 @@ RT-Thread Contraintes de TraceX
 
 | RISC-V Boards  | Zephyr version|  Platformio |  Zephyr + PlatformIO |   Prix|
 | ------------ | ------------ | ------------ | ------------ | ------------ |
-|  Seeed Studio XIAO ESP32C3 |   		✅   |  ✅    | ❌ https://docs.platformio.org/en/stable/boards/espressif32/seeed_xiao_esp32c3.html |  5,96 € |
-|  TTGO T-OI PLUS RISC-V ESP32-C3 | ✅  |   ✅ | ❌ https://docs.platformio.org/en/stable/boards/espressif32/ttgo-t-oi-plus.html  | $5.50  |
-| Espressif ESP32-C3-DevKitM-1  | ✅  |  ✅ | ❌https://docs.platformio.org/en/stable/boards/espressif32/esp32-c3-devkitm-1.html |  15,90 € TTC |
-| Espressif ESP32-C3-DevKitC-02  | ✅  | ✅  |  ❌https://docs.platformio.org/en/stable/boards/espressif32/esp32-c3-devkitc-02.html |  23,66 € |
-|DFRobot Beetle ESP32-C3  | ✅  | ✅  |  ❌https://docs.platformio.org/en/stable/boards/espressif32/dfrobot_beetle_esp32c3.html#dfrobot-beetle-esp32-c3 |  10,50 € TTC |
-| GAPuino GAP8  |❌   | ✅  |  ❌ Un kit orienté IA https://docs.platformio.org/en/stable/boards/riscv_gap/gapuino.html |   230 €|
+|  Seeed Studio XIAO ESP32C3 |   		✅   |  ✅    | ❌  |  5,96 € |
+|  TTGO T-OI PLUS RISC-V ESP32-C3 | ✅  |   ✅ | ❌   | $5.50  |
+| Espressif ESP32-C3-DevKitM-1  | ✅  |  ✅ | ❌ |  15,90 € TTC |
+| Espressif ESP32-C3-DevKitC-02  | ✅  | ✅  |  ❌ |  23,66 € |
+|DFRobot Beetle ESP32-C3  | ✅  | ✅  |  ❌ |  10,50 € TTC |
+| GAPuino GAP8  |❌   | ✅  |  ❌ Un kit orienté IA  |   230 €|
    |
+
+
+**Liens des documentations platformio de chacune des cartes précédentes :**
+
+
+
+[Seeed Studio XIAO ESP32C3](https://docs.platformio.org/en/stable/boards/espressif32/seeed_xiao_esp32c3.html)
+
+
+
+[TTGO T-OI PLUS RISC-V ESP32-C3](https://docs.platformio.org/en/stable/boards/espressif32/ttgo-t-oi-plus.html)
+
+
+
+[Espressif ESP32-C3-DevKitM-1](https://docs.platformio.org/en/stable/boards/espressif32/esp32-c3-devkitm-1.html)
+
+
+
+[Espressif ESP32-C3-DevKitC-02](https://docs.platformio.org/en/stable/boards/espressif32/esp32-c3-devkitc-02.html)
+
+
+
+[DFRobot Beetle ESP32-C3](https://docs.platformio.org/en/stable/boards/espressif32/dfrobot_beetle_esp32c3.html#dfrobot-beetle-esp32-c3)
+
+
+
+[GAPuino GAP8 "Un kit orienté IA"](https://docs.platformio.org/en/stable/boards/riscv_gap/gapuino.html)
+
 
 
 **Application réelle**

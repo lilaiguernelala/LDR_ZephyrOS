@@ -1,4 +1,3 @@
-
 # Introduction
 Dans le cadre des travaux de recherche menés au LDR sur les plateformes embarquées, les chercheurs souhaitent mettre en place des environnements de développements et de tests plus récents et robustes pour 2 applications en particulier, dans l’ordre d’importance :  
 
@@ -18,15 +17,15 @@ La première étape de cette partie consiste à mettre en place un code, à part
 - Récupère des traces simples de chaque thread.
 - Exporte les données et les affiches sur SEGGER SystemView.
 
-**Qu’est-ce que Zephyr OS ?**
+### Qu’est-ce que Zephyr OS ?
 
 Zephyr OS est un système d'exploitation temps réel open source. Il est reconnu pour sa légèreté, sa modularité et le fait qu’il supporte plusieurs plateformes, ce qui le rend adapté à une large gamme de microcontrôleurs. Avec une capacité à supporter plusieurs protocoles de communication.
 
-**Qu’est-ce que PlatformIO ?**
+### Qu’est-ce que PlatformIO ?
 
 PlatformIO est un IDE, son environnement de développement supporte le langage C/C++ pour les systèmes embarqués. Compatible avec plusieurs systèmes d'exploitation (Windows, Mac et Linux), il s'intègre également en tant qu'extension aux éditeurs de texte existants comme VSCode.
 
-**Définition du Tracing**
+### Définition du Tracing
 
 L’utilisation du tracing dans un système d’exploitation temps réel comme **ZephyrOS** est bénéfique car il permet d’analyser le comportement du système en temps réel en enregistrant les évènements tel que les changements de threads. Cela aide à identifier les bugs ainsi que les problèmes de performances. 
 On peut également détecter les threads qui consomment trop de temps cela nous permet d’optimiser le système. 
@@ -82,7 +81,7 @@ Après avoir exécuter le code sur VSCode, et connecter le J-Link, les traces se
 ![SystemView traces](/assets/images/Image1.png "traces des threads")
 
 
-**A quoi servent les traces ?**
+#### A quoi servent les traces ?
 
 Dans notre code on a trois threads (2 LEDs et un switch), le traçage permet de :
 -	Surveiller quand et combien de fois chaque thread est exécuté, c’est important pour analyser le comportement des threads. 
@@ -90,7 +89,7 @@ Dans notre code on a trois threads (2 LEDs et un switch), le traçage permet de 
 -	Si on voit que la LED 1 par exemple monopolise les ressources plus que prévu, on peut jouer sur le nombre d’itérations ou sur la priorité des threads.
 -	Si un problème est détecté, on peut consulter les traces pour voir exactement ce qui se passait juste avant l’erreur
 
-**Les moyens de suivre des traces d'un code embarqué sans ZephyrOS**
+#### Les moyens de suivre des traces d'un code embarqué sans ZephyrOS
 
 -	Freertos SystemView peut être utilisé pour enregistrer des applications qui utilisent FreeRTOS V8, V9, V10 ou V11. Jusqu'à la V10, la source FreeRTOS doit être légèrement modifiée pour afficher correctement l'exécution de l'ordonnanceur FreeRTOS. A partir de la V11, aucune modification du noyau n'est nécessaire.
 RT-Thread Contraintes de TraceX
@@ -99,7 +98,7 @@ RT-Thread Contraintes de TraceX
 
 ![Traces sur TraceX](/assets/images/Image3.png "Azure RTOS TraceX")
 
-### Tableau pour ajouter de nouvelles architectures au projet PlatformIO : autres cartes ST, RISC-V**
+#### Tableau pour ajouter de nouvelles architectures au projet PlatformIO : autres cartes ST, RISC-V
 
 | RISC-V Boards | Zephyr version| Platformio | Zephyr + PlatformIO |  Prix  |
 | ------------  | ------------  | ---------- | ------------------- | ------ |
@@ -172,7 +171,7 @@ créer un nouveau dossier dts/bindings et mettre dedans ce fichier .yaml :
 ```js
 description: PWM-driven servo motor.
 
-**compatible: "pwm-servo"**
+compatible: "pwm-servo"
 
 include: base.yaml
 
@@ -258,12 +257,12 @@ un code simple qui fonctionne tout seul sans pour autant l'integrer dans le doss
 ensuite integrer le capteur de hcsr04 dans le driver 
 ***jusqu'ici***
 
-**PS:** au moment de renommer un dossier, évitez les espaces ou caractères spéciaux 
+**PS** au moment de renommer un dossier, évitez les espaces ou caractères spéciaux 
 
 **A noter**
 Pour que le servomoteur compile, s'exécute correctement et réalise les tâches qu'on lui demande de faire, on ne doit pas l'intégrer à un projet qui contient déjà un Display, par contre il fonctionne bien avec d'autres composants à la fois mais il faut respecter certains paramêtres. 
 
-**Exemple:** 
+**Exemple** 
 - Check la DOC de zephyr: 
 
 
@@ -271,5 +270,6 @@ Pour que le servomoteur compile, s'exécute correctement et réalise les tâches
 
 
 The corresponding PWM pulse widths for a 0 to 180 degree range are 700 to 2300 microseconds, respectivel
+
 
 - Le code compile sans erreurs quand y a l'écran mais le servomoteur ne fonctionne pas, même s'il reçoit un signal (on entend un bruit)

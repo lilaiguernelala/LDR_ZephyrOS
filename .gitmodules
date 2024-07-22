@@ -1,0 +1,3 @@
+[submodule "HC-SR04-Driver-ModuleTest"]
+	path = ModuleTest/zephyr/modules/hc_sr04
+	url = https://github.com/pcourbin/HC-SR04_zephyr_driver

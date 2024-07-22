@@ -1,56 +1,15 @@
 / {
-    ultrason0: hc-sr04 {
+    us0: hc-sr04_0 {
         compatible = "zephyr,hc-sr04";
         trig-gpios = <&gpiog 5 GPIO_ACTIVE_HIGH>;
         echo-gpios = <&gpiog 4 GPIO_ACTIVE_HIGH>;
         status = "okay";
     };
 
-    leds {
-        // Add Trigger on PG5
-        hcsr04_trigger: hcsr04_trig {
-            gpios = <&gpiog 5 GPIO_ACTIVE_LOW>;
-        };
-        hcsr04_echo: hcsr04_ech {
-            gpios = <&gpiog 4 GPIO_ACTIVE_LOW>;
-        };
-    };
-
-    // Define the servo node with a unique label
-    servo: servo {
-        compatible = "pwm-servo";
-        pwms = <&pwm4 0 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
-        min-pulse = <PWM_USEC(700)>;
-        max-pulse = <PWM_USEC(2500)>;
-    };
-
-    aliases {
-        ultrasonictrigger = &hcsr04_trigger;
-        ultrasonicecho = &hcsr04_echo;
-    };
-
-    chosen {
-        perso,bme680 = &bme680;
-        perso,us0 = &ultrason0;
-    };
-};
-
-&i2c3 {
-    bme680: bme680@77 {
-        compatible = "bosch,bme680";
-        reg = <0x77>;
-    };
-};
-
-&timers4 {
-    status = "okay";
-    st,prescaler = <1000>;
-
-    pwm4: pwm {
+    us1: hc-sr04_1 {
+        compatible = "zephyr,hc-sr04";
+        trig-gpios = <&gpiog 2 GPIO_ACTIVE_HIGH>;
+        echo-gpios = <&gpiog 3 GPIO_ACTIVE_HIGH>;
         status = "okay";
-        pinctrl-0 = <&tim4_ch4_pd15>;
-        pinctrl-names = "default";
     };
 };
-
-

@@ -106,7 +106,7 @@ RT-Thread Contraintes de TraceX
 | Espressif ESP32-C3-DevKitM-1 | ✅ | ✅ | ❌ | 15,90 € TTC |
 | Espressif ESP32-C3-DevKitC-02 | ✅  | ✅  |  ❌ | 23,66 € |
 |DFRobot Beetle ESP32-C3 | ✅ | ✅ | ❌ | 10,50 € TTC |
-| GAPuino GAP8 | ❌ | ✅ | ❌ | 230 €|
+| GAPuino GAP8 | ❌ | ✅ | ❌ | 230 € |
 
 
 

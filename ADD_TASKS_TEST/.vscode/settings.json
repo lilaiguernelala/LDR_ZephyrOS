@@ -1,5 +1,5 @@
 {
     "files.associations": {
-        "kernel.h": "c"
+        "typeinfo": "cpp"
     }
 }

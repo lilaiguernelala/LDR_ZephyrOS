@@ -20,4 +20,5 @@ public:
     double get_temperature();
     double get_humidity();
 };
+
 #endif

@@ -13,6 +13,7 @@
 #include <zephyr/logging/log.h>
 #include <stdio.h>
 #include <string.h>
+#include "display.hpp"
 #include "bme680.hpp"
 #include "servo.hpp"
 
@@ -23,22 +24,26 @@ LOG_MODULE_REGISTER(app);
 
 #define STACKSIZE (4096)
 static K_THREAD_STACK_DEFINE(bme680_stack, STACKSIZE);
+static K_THREAD_STACK_DEFINE(display_stack, STACKSIZE);
 static K_THREAD_STACK_DEFINE(servo_stack, STACKSIZE);
 static K_THREAD_STACK_DEFINE(hc_sr04_stack, STACKSIZE);
 
 #define PRIO_SERVO_TASK 1
-#define PRIO_BME680_TASK 3
-#define PRIO_HC_SR04_TASK 2
+#define PRIO_BME680_TASK 2
+#define PRIO_HC_SR04_TASK 3
+#define PRIO_DISPLAY_TASK 4
 
-#define PERIOD_SERVO_TASK 20
-#define PERIOD_BME680_TASK 10
-#define PERIOD_HC_SR04_TASK 30
+#define PERIOD_SERVO_TASK 200
+#define PERIOD_BME680_TASK 200
+#define PERIOD_HC_SR04_TASK 200
+#define PERIOD_DISPLAY_TASK 2000
 
 static const struct pwm_dt_spec servo_dev = PWM_DT_SPEC_GET(DT_NODELABEL(servo));
 static const uint32_t min_pulse = DT_PROP(DT_NODELABEL(servo), min_pulse);
 static const uint32_t max_pulse = DT_PROP(DT_NODELABEL(servo), max_pulse);
 
 const struct device *hc_sr04_dev;
+myDisplay display;
 myBME680 bme680;
 myServo servo;
 
@@ -48,6 +53,34 @@ enum direction {
     DOWN,
     UP,
 };
+
+static void display_task(void *p1, void *p2, void *p3)
+{
+	char name[10] = "DISPLAY";
+	k_tid_t tid = k_current_get();
+	int period = PERIOD_DISPLAY_TASK;
+
+	char text[50] = {0};
+	uint32_t start;
+
+	struct k_timer timer;
+	k_timer_init(&timer, NULL, NULL);
+	k_timer_start(&timer, K_MSEC(0), K_MSEC(period));
+	LOG_INF("Run task DISPLAY - Priority %d - Period %d\n", k_thread_priority_get(tid), period);
+	while (1)
+	{
+		k_timer_status_sync(&timer);
+		LOG_INF("START task %s", name);
+		start = k_uptime_get_32();
+		display.task_handler();
+		display.chart_add_temperature(bme680.get_temperature());
+		display.chart_add_humidity(bme680.get_humidity());
+
+		sprintf(text, "%d.%02d - %d.%02d", bme680.temperature.val1, bme680.temperature.val2 / 10000, bme680.humidity.val1, bme680.humidity.val2 / 10000);
+		display.text_add(text);
+		LOG_INF("END task %s - %dms", name, k_uptime_get_32() - start);
+	}
+}
 
 static void bme680_task(void *p1, void *p2, void *p3)
 {
@@ -132,7 +165,9 @@ int main(void)
     struct k_thread bme680_t;
     struct k_thread servo_t;
     struct k_thread hc_sr04_t;
+	struct k_thread display_t;
 
+	display.init(true);
     bme680.init();
     servo.init(&servo_dev, min_pulse, max_pulse); 
     hc_sr04_dev = DEVICE_DT_GET_ANY(zephyr_hc_sr04);
@@ -153,9 +188,10 @@ int main(void)
                     PRIO_HC_SR04_TASK, 0, K_NO_WAIT);  
     k_thread_name_set(hc_sr04, "hc_sr04");
 
-    k_thread_start(&bme680_t);
-    k_thread_start(&servo_t);
-    k_thread_start(&hc_sr04_t);
+    k_tid_t display = k_thread_create(&display_t, display_stack, K_THREAD_STACK_SIZEOF(display_stack),
+					display_task, NULL, NULL, NULL,
+					PRIO_DISPLAY_TASK, 0, K_NO_WAIT);
+    k_thread_name_set(display, "display");
 
     return 0;
 }

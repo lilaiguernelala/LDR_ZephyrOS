@@ -27,12 +27,12 @@ static K_THREAD_STACK_DEFINE(servo_stack, STACKSIZE);
 static K_THREAD_STACK_DEFINE(hc_sr04_stack, STACKSIZE);
 
 #define PRIO_SERVO_TASK 1
-#define PRIO_BME680_TASK 2
-#define PRIO_HC_SR04_TASK 3
+#define PRIO_BME680_TASK 3
+#define PRIO_HC_SR04_TASK 2
 
-#define PERIOD_BME680_TASK 500
-#define PERIOD_SERVO_TASK 1000
-#define PERIOD_HC_SR04_TASK 300
+#define PERIOD_SERVO_TASK 20
+#define PERIOD_BME680_TASK 10
+#define PERIOD_HC_SR04_TASK 30
 
 static const struct pwm_dt_spec servo_dev = PWM_DT_SPEC_GET(DT_NODELABEL(servo));
 static const uint32_t min_pulse = DT_PROP(DT_NODELABEL(servo), min_pulse);
@@ -60,16 +60,13 @@ static void bme680_task(void *p1, void *p2, void *p3)
     struct k_timer timer;
     k_timer_init(&timer, NULL, NULL);
     k_timer_start(&timer, K_MSEC(0), K_MSEC(period));
-   // k_msleep(1000);  /////////
     LOG_INF("Run task BME680 - Priority %d - Period %d\n", k_thread_priority_get(tid), period);
     while (1)
     {
         k_timer_status_sync(&timer);
-     //   k_msleep(1000);  ////////////
         LOG_INF("START task %s", name);
         start = k_uptime_get_32();
         bme680.update_values();
-      //  k_msleep(1000);  //////////////
         LOG_INF("END task %s - %dms", name, k_uptime_get_32() - start);       
     }
 }
@@ -77,18 +74,23 @@ static void bme680_task(void *p1, void *p2, void *p3)
 static void servo_task(void *p1, void *p2, void *p3)
 {
     char name[20] = "SERVO";
+    
+    int period2 = PERIOD_SERVO_TASK;
+    uint32_t start;
+    struct k_timer timer;
+    k_timer_init(&timer, NULL, NULL);
+    k_timer_start(&timer, K_MSEC(0), K_MSEC(period2));
 
     while (1) {
+        k_timer_status_sync(&timer);
+
         if (object_detected) {
             servo.setPosition(90);
-         ///   k_msleep(1000);
             LOG_INF("Servo moving to 90 degrees in task %s", name);
         } else {
             servo.setPosition(0);
-          ///  k_msleep(1000);
             LOG_INF("Servo moving to 0 degrees in task %s", name);
         }
-        k_sleep(K_SECONDS(2));  
     }
 }
 
@@ -96,24 +98,32 @@ void hc_sr04_task(void *p1, void *p2, void *p3)
 {
     static struct sensor_value distance;
     int ret;
+    int period3 = PERIOD_HC_SR04_TASK;
+
+    uint32_t start;
+
+    struct k_timer timer;
+    k_timer_init(&timer, NULL, NULL);
+    k_timer_start(&timer, K_MSEC(0), K_MSEC(period3));
+
+    //int nb = 10;
 
     while (1) {
+        k_timer_status_sync(&timer);
+
         ret = sensor_sample_fetch(hc_sr04_dev);
         if (ret != 0) {
-           /// k_msleep(1000);
             LOG_ERR("Cannot take measurement: %d", ret);
         } else {
             sensor_channel_get(hc_sr04_dev, SENSOR_CHAN_DISTANCE, &distance);
-          ///  k_msleep(1000);
-
-            LOG_INF("Distance: %d.%06d cm", distance.val1, distance.val2);
-            if (distance.val1 < 20) {      ////// INFERIEUR A 20 CM
-                object_detected = true;
-            } else {
-                object_detected = false;
-            }
         }
-        k_sleep(K_SECONDS(2));  
+
+        LOG_INF("Distance: %d.%06d cm", distance.val1, distance.val2);
+        if (distance.val1 < 20) {      ////// INFERIEUR A 20 CM
+            object_detected = true;
+        } else {
+            object_detected = false;
+        }
     }
 }
 

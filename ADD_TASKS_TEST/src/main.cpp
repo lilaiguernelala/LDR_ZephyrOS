@@ -128,17 +128,20 @@ int main(void)
     hc_sr04_dev = DEVICE_DT_GET_ANY(zephyr_hc_sr04);
     __ASSERT(hc_sr04_dev != NULL, "Failed to get device binding");
 
-    k_thread_create(&bme680_t, bme680_stack, K_THREAD_STACK_SIZEOF(bme680_stack),
+    k_tid_t bme680 = k_thread_create(&bme680_t, bme680_stack, K_THREAD_STACK_SIZEOF(bme680_stack),
                     bme680_task, NULL, NULL, NULL,
                     PRIO_BME680_TASK, 0, K_NO_WAIT);
+    k_thread_name_set(bme680, "bme680");
 
-    k_thread_create(&servo_t, servo_stack, K_THREAD_STACK_SIZEOF(servo_stack),
+    k_tid_t servo = k_thread_create(&servo_t, servo_stack, K_THREAD_STACK_SIZEOF(servo_stack),
                     servo_task, NULL, NULL, NULL,
                     PRIO_SERVO_TASK, 0, K_NO_WAIT);
+    k_thread_name_set(servo, "servo");
 
-    k_thread_create(&hc_sr04_t, hc_sr04_stack, K_THREAD_STACK_SIZEOF(hc_sr04_stack),
+    k_tid_t hc_sr04 = k_thread_create(&hc_sr04_t, hc_sr04_stack, K_THREAD_STACK_SIZEOF(hc_sr04_stack),
                     hc_sr04_task, NULL, NULL, NULL,
                     PRIO_HC_SR04_TASK, 0, K_NO_WAIT);  
+    k_thread_name_set(hc_sr04, "hc_sr04");
 
     k_thread_start(&bme680_t);
     k_thread_start(&servo_t);

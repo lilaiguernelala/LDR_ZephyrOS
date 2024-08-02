@@ -27,15 +27,15 @@ static K_THREAD_STACK_DEFINE(bme680_stack, STACKSIZE);
 static K_THREAD_STACK_DEFINE(hc_sr04_stack, STACKSIZE);
 static K_THREAD_STACK_DEFINE(display_stack, STACKSIZE);
 
-#define PRIO_SERVO_TASK 4
-#define PRIO_BME680_TASK 2
-#define PRIO_HC_SR04_TASK 3
-#define PRIO_DISPLAY_TASK 1
+#define PRIO_SERVO_TASK 3
+#define PRIO_BME680_TASK 1
+#define PRIO_HC_SR04_TASK 2
+#define PRIO_DISPLAY_TASK 4
 
-#define PERIOD_SERVO_TASK 200
+#define PERIOD_SERVO_TASK 300
 #define PERIOD_BME680_TASK 200
-#define PERIOD_HC_SR04_TASK 200
-#define PERIOD_DISPLAY_TASK 2000
+#define PERIOD_HC_SR04_TASK 400
+#define PERIOD_DISPLAY_TASK 200
 
 static const struct pwm_dt_spec servo_dev = PWM_DT_SPEC_GET(DT_NODELABEL(servo));
 static const uint32_t min_pulse = DT_PROP(DT_NODELABEL(servo), min_pulse);
@@ -95,8 +95,11 @@ static void bme680_task(void *p1, void *p2, void *p3)
     while (1)
     {
         TASK_START()
-
+        
         bme680.update_values();
+        LOG_INF("Temperature: %d.%06d °C, Humidity: %d.%06d %%", 
+                bme680.temperature.val1, bme680.temperature.val2 / 10000,
+                bme680.humidity.val1, bme680.humidity.val2 / 10000);
 
         TASK_END()
     }

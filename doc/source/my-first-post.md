@@ -248,8 +248,6 @@ dans platformio : stm32f429i_disc1
 - [Formule du servomoteur](https://stackoverflow.com/questions/12931115/algorithm-to-map-an-interval-to-a-smaller-interval)
 
 
-
-***A retravailler***
 code : //largeur de repetition c'est 20ms elle est choisie 2500 et 700 c'est la durée qu'il prend sur chaque coté en microseconde on peut la changer en fonction de la rapidité qu'on veut avoir
 elle va de 900 jusqu'à 2100 c'est une pulsation
 
@@ -258,7 +256,7 @@ on peut changer la valeur de la largeur de repetition en fonction de la rapidit�
 
 un code simple qui fonctionne tout seul sans pour autant l'integrer dans le dossier 
 ensuite integrer le capteur de hcsr04 dans le driver 
-***jusqu'ici***
+
 
 **PS** au moment de renommer un dossier, évitez les espaces ou caractères spéciaux 
 

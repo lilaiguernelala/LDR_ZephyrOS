@@ -35,7 +35,7 @@ Le tracing facilite l’analyse comparative et la reproductibilité des tests, o
 
 #### Les étapes à suivre pour récupérer des traces d’un code 
 
-Modifier le fichier .conf de notre projet NoGUI en ajoutant les lignes 
+- Modifier le fichier .conf de notre projet NoGUI en ajoutant les lignes 
 
 ```c++
 
@@ -49,32 +49,32 @@ CONFIG_SEGGER_RTT_BUFFER_SIZE_UP=4096
 
 Zephyr utilise RTT (Real-Time Transfer) comme moyen de transport principal pour SystemView, dans ce cas l'exportation des traces nécessite toujours l'utilisation d'un appareil J-Link car ZephyrOS ne supporte pas actuellement l'exportation des traces via d'autres moyens comme l'UART ou le réseau, qui pourraient permettre une transmission directe sans hardware spécifique.
 
-D’où l’intérêt d’utiliser un 
+D’où l’intérêt d’utiliser un [J-Link Segger EDU](https://fr.farnell.com/segger/8-08-91-j-link-edu-mini/unit-d-education-cortex-m/dp/3106578?gross_price=true&CMP=KNC-GFR-GEN-SHOPPING-Catch-All-GA4-Other-Channel-Audiences-Test-03-Nov-23&mckv=_dc%7Cpcrid%7C%7Cplid%7C%7Ckword%7C%7Cmatch%7C%7Cslid%7C%7Cproduct%7C3106578%7Cpgrid%7C%7Cptaid%7C&gad_source=1&gclid=Cj0KCQjw3tCyBhDBARIsAEY0XNlGYtov5E70cmn43-1cGxXln7vgYtljY4FBiqdjiT4U-VoNwqK6bkgaAnjHEALw_wcB) pour pouvoir exporter les traces de chaque thread et les afficher sur SEGGER SystemView.
 
-[J-Link Segger EDU](https://fr.farnell.com/segger/8-08-91-j-link-edu-mini/unit-d-education-cortex-m/dp/3106578?gross_price=true&CMP=KNC-GFR-GEN-SHOPPING-Catch-All-GA4-Other-Channel-Audiences-Test-03-Nov-23&mckv=_dc%7Cpcrid%7C%7Cplid%7C%7Ckword%7C%7Cmatch%7C%7Cslid%7C%7Cproduct%7C3106578%7Cpgrid%7C%7Cptaid%7C&gad_source=1&gclid=Cj0KCQjw3tCyBhDBARIsAEY0XNlGYtov5E70cmn43-1cGxXln7vgYtljY4FBiqdjiT4U-VoNwqK6bkgaAnjHEALw_wcB)
+- Ce qu’il faut installer pour la réalisation de cette partie :
 
-pour pouvoir exporter les traces de chaque thread et les afficher sur SEGGER SystemView.
+**[J-Link software](https://www.segger.com/downloads/jlink/)**
 
-Ce qu’il faut installer pour la réalisation de cette partie :
+**[SEGGER SystemView](https://www.segger.com/downloads/systemview/)**
+
+Afin de pouvoir utiliser le J-Link pour programmer la STM32 sur une application externe. Il suffit de retirer les deux cavaliers de CN4 de la carte comme indiqué sur la figure suivante :
+
+![Figure](/assets/images/Image5.png "Connexion SWD")
+
+Ensuite connecter l'application au connecteur de débogage CN2 selon le tableau suivant : 
+
+![Tableau](/assets/images/Image4.png "Connexion SWD")
 
 
--	[J-Link software](https://www.segger.com/downloads/jlink/)
+Source : [User manual](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.st.com/resource/en/user_manual/um1670-discovery-kit-with-stm32f429zi-mcu-stmicroelectronics.pdf)
 
+Après avoir brancher via un cable usb le J-Link, lancez l'application J-Link Commander V7.96e sur votre PC pour pouvoir se connecter au J-Link tout en laissant les paramêtres par défaut en cliquant sur 'Entrée' (comme sur l'image en dessous) à chaque étape sauf une : 
 
--	[SEGGER SystemView](https://www.segger.com/downloads/systemview/)
-
-
-Afin de pouvoir utiliser le J-Link pour programmer le STM32 sur une application externe. Il suffit de retirer les deux cavaliers de CN4 comme indiqué sur la Figure suivante et de connecter l'application au connecteur de débogage CN2 selon le Tableau suivant: 
-
-![Tableau](/assets/images/Image4.png "Connexion")
-
-[!WARNING]
-
-Sélectionnez le protocole SWD pendant la connexion du J-Link, tout en laissant le reste des paramètres par défaut (comme sur l'image en dessous)
+- Sélectionnez le protocole SWD pendant la connexion du J-Link  
 
 ![Terminal configuration](/assets/images/Image2.jpg "connecting to J-Link")
 
-Après avoir exécuter le code sur VSCode, et connecter le J-Link, les traces seront affichées en commençant l’enregistrement sur l’interface graphique de SEGGER SystemView.
+Après avoir exécuter le code sur VSCode, et connecter le J-Link, les traces seront affichées en commençant l’enregistrement sur l’interface graphique de SEGGER SystemView. La figure suivante illustre un exemple de traces.
 
 ![SystemView traces](/assets/images/Image1.png "traces des threads")
 
@@ -89,9 +89,9 @@ Dans notre code on a trois threads (2 LEDs et un switch), le traçage permet de 
 #### Les moyens de suivre des traces d'un code embarqué sans ZephyrOS
 
 -	Freertos SystemView peut être utilisé pour enregistrer des applications qui utilisent FreeRTOS V8, V9, V10 ou V11. Jusqu'à la V10, la source FreeRTOS doit être légèrement modifiée pour afficher correctement l'exécution de l'ordonnanceur FreeRTOS. A partir de la V11, aucune modification du noyau n'est nécessaire.
-RT-Thread Contraintes de TraceX
+
 -	TraceX présente les contraintes suivantes :
--	TraceX ne peut pas mesurer avec précision les intervalles entre les événements supérieurs à la période de la minuterie.
+   TraceX ne peut pas mesurer avec précision les intervalles entre les événements supérieurs à la période de la minuterie.
 
 ![Traces sur TraceX](/assets/images/Image3.png "Azure RTOS TraceX")
 
@@ -132,15 +132,12 @@ RT-Thread Contraintes de TraceX
 
 ### Application réelle
 
-Créer un parking system, le vrai but derrière c'est de réussir à rajouter le plus de composants possibles (capteurs, actionneurs...) sur le projet ZephyrOS déjà existant.
+Afin de tester de vraies données et les afficher sur SEGGER SystemView, nous avons mis en place un système simulant l'entrée d'un parking, où une barrière s'ouvre lorsqu'elle détecte un mouvement à 20 cm grâce à un capteur ultrason HCSR04. Si aucun mouvement n'est détecté, la barrière se referme. Ce système fonctionne avec le capteur ultrason HCSR04 et un ServoMoteur, tous deux connectés à la carte STM32.
 
-***Explication sur le parking system***
-À l'entrée du système de stationnement, un scanner permet de détecter l'arrivée d'un véhicule. Une fois que l'ISR est déclenché, un mot de passe est envoyé au système et s'il correspond au mot de passe correct, le portail s'ouvre pour permettre au véhicule d'entrer. Dans le cas contraire, le portail reste verrouillé. Si le véhicule entre dans le parking, le nombre de places de parking est mis à jour. S'il n'y a pas de place de parking disponible, le système enverra le message "Parking non disponible" afin que les gens gagnent du temps.
-Capteur ultrason n’utilise pas d’interface de communication (I2C ou UART), ils utilisent généralement que des broches GPIO pour se connecter.
-Pour pouvoir rajouter le capteur de distance à notre projet zephyr, il faut créer un driver puisqu’il n’existe pas encore 
+ **Connexion du ServoMoteur à ZephyrOS**
 
-
- #### Capteur de distance HCSR04 
+- Le capteur ultrason HCSR04 n’utilise pas d’interface de communication telle que I2C ou UART, mais se connecte via des broches GPIO. 
+  Comme il n'existe pas encore de driver pour ce capteur spécifique dans ZephyrOS, il a été nécessaire de développer un module Zephyr personnalisé pour intégrer le HCSR04 au projet. Ce driver permet de capturer les impulsions ultrasonores émises et reçues, puis de calculer la distance en fonction du temps de retour de l’écho. 
 
 à rajouter dans le fichier "overlay" du projet 
 
@@ -153,17 +150,16 @@ Pour pouvoir rajouter le capteur de distance à notre projet zephyr, il faut cr�
     status = "okay";
 };
 ```
-**PARTIE A COMPLETER (MODULE FAIT PAR MR COURBIN)**
-***A completer***
 
-#### ServoMoteur FS90 
+ **Connexion du ServoMoteur à ZephyrOS**
 
-**Ce qu'il faut modifier pour pouvoir rajouter un servomoteur à notre projet zephyr**
+  En raison de l’utilisation de l’écran intégré, qui mobilise de nombreuses autres broches PWM et plusieurs timers. Il a donc été compliqué de localiser une broche PWM disponible, donc il faut d'abord trouver la bonne broche sur la carte STM32 pour assurer son bon fonctionnement en s’appuyant sur un timer non déjà utilisé par l’écran. 
+  - Timer : TIM9
+  - Canal PWM : TIM9_CH2
+  - Broche : PE6
 
-Les canaux de PWM sur le fichier overlay ça va de 0 à 3 et même si on écrit 4 il le prend comme un 3 par défaut directement. 
-
-pour rajouter un servomoteur à notre projet zephyrOS 
-créer un nouveau dossier dts/bindings et mettre dedans ce fichier .yaml : 
+Pour rajouter un servomoteur à notre projet zephyrOS 
+- créez un nouveau dossier dts/bindings et mettre dedans ce fichier .yaml : 
 
 ```js
 description: PWM-driven servo motor.
@@ -189,30 +185,49 @@ properties:
     description: Maximum pulse width (nanoseconds).
 ```
 
-Dans le fichier overlay compatible = "pwm-servo" on doit avoir le meme nom que sur le compatible de yaml
+- La largeur de répetition c'est 20ms elle est choisie 2500 et 700, c'est la durée qu'il prend sur chaque coté en microsecondes.
+
+- On peut changer la valeur de la pulsation et celle de la largeur de répétition en fonction de la rapidité qu'on souhaite avoir.
+
+
+- Dans le fichier .overlay compatible = "pwm-servo" on doit avoir le meme nom que sur le compatible de yaml
 
 ```js
     servo: servo {
-        **compatible = "pwm-servo";**
-        pwms = <&pwm1 3 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
+        compatible = "pwm-servo";
+        pwms = <&pwm9 2 PWM_MSEC(20) PWM_POLARITY_NORMAL>;
         min-pulse = <PWM_USEC(700)>;
         max-pulse = <PWM_USEC(2500)>;
     };
 ```
 
-```js pinctrl-0 = <&tim1_ch3_pe13>;```  cette ligne veut dire: channel 4 sur le pin PE13
+```js
+&timers9 {
+    status = "okay";
+    st,prescaler = <1000>;
 
-Activer le PWM dans le fichier prj.conf se fait avec la ligne suivante: CONFIG_PWM=y
-Rajouter cette bibliotheque #include <zephyr/drivers/pwm.h> dans le main principal 
+    pwm9: pwm {
+        status = "okay";
+        pinctrl-0 = <&tim9_ch2_pe6>;
+        pinctrl-names = "default";
+    };
+};
+```
+
+
+Pour activer le PWM dans le fichier prj.conf se fait avec la ligne suivante: ```js CONFIG_PWM=y ```
+Rajoutez cette bibliotheque #include <zephyr/drivers/pwm.h> dans le main principal 
 
 
 **PS :** Le nom de notre fichier overlay doit être le même que celui de notre board dans platformio.ini, ce n'est pas trop le même que celui de ZephyrOS
 
-dans ZephyrOS : disco_f429zi
-dans platformio : stm32f429i_disc1
+- Dans ZephyrOS : disco_f429zi
+- Dans PlatformIO : stm32f429i_disc1
+
+Maintenant que le capteur HCSR04 et le ServoMoteur sont connectés et opérationnels, nous pouvons créer des tâches dans le code principal (main) pour les gérer. Ces tâches seront ensuite exportées et affichées sur SEGGER SystemView, permettant de récupérer des mesures et de les analyser.
+
 
 **Liens importants :**
-
 
 
 - [Exemple d'un code servomoteur](https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/samples/basic/servo_motor)
@@ -242,27 +257,7 @@ dans platformio : stm32f429i_disc1
 - [Formule du servomoteur](https://stackoverflow.com/questions/12931115/algorithm-to-map-an-interval-to-a-smaller-interval)
 
 
-code : //largeur de repetition c'est 20ms elle est choisie 2500 et 700 c'est la durée qu'il prend sur chaque coté en microseconde on peut la changer en fonction de la rapidité qu'on veut avoir
-elle va de 900 jusqu'à 2100 c'est une pulsation
-
-on peut changer la valeur de la pulsation en fonction de la rapidité qu'on veut avoir
-on peut changer la valeur de la largeur de repetition en fonction de la rapidité qu'on veut
-
-un code simple qui fonctionne tout seul sans pour autant l'integrer dans le dossier 
-ensuite integrer le capteur de hcsr04 dans le driver 
+- [DOC Zephyr](https://docs.zephyrproject.org/latest/samples/basic/servo_motor/README.html)
 
 
 **PS** au moment de renommer un dossier, évitez les espaces ou caractères spéciaux 
-
-**A noter**
-Pour que le servomoteur compile, s'exécute correctement et réalise les tâches qu'on lui demande de faire, on ne doit pas l'intégrer à un projet qui contient déjà un Display, par contre il fonctionne bien avec d'autres composants à la fois mais il faut respecter certains paramêtres. 
-
-**Exemple** 
-- Check la DOC de zephyr: 
-
-
-[DOC Zephyr](https://docs.zephyrproject.org/latest/samples/basic/servo_motor/README.html)
-
-
-The corresponding PWM pulse widths for a 0 to 180 degree range are 700 to 2300 microseconds, respectivel
-

@@ -215,7 +215,7 @@ properties:
 ```
 
 
-Pour activer le PWM dans le fichier prj.conf se fait avec la ligne suivante: ```js CONFIG_PWM=y ```
+Pour activer le PWM dans le fichier prj.conf se fait avec la ligne suivante: ``` CONFIG_PWM=y ```
 Rajoutez cette bibliotheque #include <zephyr/drivers/pwm.h> dans le main principal 
 
 

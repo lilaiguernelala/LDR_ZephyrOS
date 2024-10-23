@@ -66,25 +66,17 @@ Ce qu’il faut installer pour la réalisation de cette partie :
 
 Afin de pouvoir utiliser le J-Link pour programmer le STM32 sur une application externe. Il suffit de retirer les deux cavaliers de CN4 comme indiqué sur la Figure suivante et de connecter l'application au connecteur de débogage CN2 selon le Tableau suivant: 
 
-
 ![Tableau](/assets/images/Image4.png "Connexion")
-
 
 [!WARNING]
 
 Sélectionnez le protocole SWD pendant la connexion du J-Link, tout en laissant le reste des paramètres par défaut (comme sur l'image en dessous)
 
-
-
 ![Terminal configuration](/assets/images/Image2.jpg "connecting to J-Link")
-
-
 
 Après avoir exécuter le code sur VSCode, et connecter le J-Link, les traces seront affichées en commençant l’enregistrement sur l’interface graphique de SEGGER SystemView.
 
-
 ![SystemView traces](/assets/images/Image1.png "traces des threads")
-
 
 #### A quoi servent les traces ?
 

@@ -10,14 +10,14 @@ Différents travaux sont réalisés depuis plusieurs années avec l’ONERA sur 
 
 La documentation de la partie "Simulation" est disponible dans le dossier LDR_Simulation
 
-## Embarqué
+# Embarqué
 
-La première étape de cette partie consiste à mettre en place un code, à partir du code NoGUI vu en TP du module « Programmation temps réel » sur la carte ST STM32F429I Discovery avec ZephyrOS en se basant sur l'IDE PlatformIO qui : 
+La première étape de cette partie consiste à mettre en place un code, à partir du code NoGUI vu en [TP_Programmation temps réel](https://github.com/pcourbin-teaching/Zephyr_STM32) sur la carte ST STM32F429I Discovery avec ZephyrOS en se basant sur l'IDE PlatformIO qui : 
 
 - Récupère des traces simples de chaque thread.
-- Exporte les données et les affiches sur SEGGER SystemView.
+- Exporte les données et les afficher sur SEGGER SystemView.
 
-### Qu’est-ce que Zephyr OS ?
+## Qu’est-ce que Zephyr OS ?
 
 Zephyr OS est un système d'exploitation temps réel open source. Il est reconnu pour sa légèreté, sa modularité et le fait qu’il supporte plusieurs plateformes, ce qui le rend adapté à une large gamme de microcontrôleurs. Avec une capacité à supporter plusieurs protocoles de communication.
 
@@ -37,7 +37,6 @@ Le tracing facilite l’analyse comparative et la reproductibilité des tests, o
 
 Modifier le fichier .conf de notre projet NoGUI en ajoutant les lignes 
 
-
 ```c++
 
 CONFIG_TRACING=y
@@ -54,8 +53,6 @@ D’où l’intérêt d’utiliser un
 
 [J-Link Segger EDU](https://fr.farnell.com/segger/8-08-91-j-link-edu-mini/unit-d-education-cortex-m/dp/3106578?gross_price=true&CMP=KNC-GFR-GEN-SHOPPING-Catch-All-GA4-Other-Channel-Audiences-Test-03-Nov-23&mckv=_dc%7Cpcrid%7C%7Cplid%7C%7Ckword%7C%7Cmatch%7C%7Cslid%7C%7Cproduct%7C3106578%7Cpgrid%7C%7Cptaid%7C&gad_source=1&gclid=Cj0KCQjw3tCyBhDBARIsAEY0XNlGYtov5E70cmn43-1cGxXln7vgYtljY4FBiqdjiT4U-VoNwqK6bkgaAnjHEALw_wcB)
 
-
-
 pour pouvoir exporter les traces de chaque thread et les afficher sur SEGGER SystemView.
 
 Ce qu’il faut installer pour la réalisation de cette partie :
@@ -67,6 +64,11 @@ Ce qu’il faut installer pour la réalisation de cette partie :
 -	[SEGGER SystemView](https://www.segger.com/downloads/systemview/)
 
 
+Afin de pouvoir utiliser le J-Link pour programmer le STM32 sur une application externe. Il suffit de retirer les deux cavaliers de CN4 comme indiqué sur la Figure suivante et de connecter l'application au connecteur de débogage CN2 selon le Tableau suivant: 
+
+
+![image](https://github.com/user-attachments/assets/5b9930b9-c324-4e3a-9456-b1136f6f3bf7)
+
 
 [!WARNING]
 
@@ -74,6 +76,8 @@ Sélectionnez le protocole SWD pendant la connexion du J-Link, tout en laissant 
 
 
 ![Terminal configuration](/assets/images/Image2.jpg "connecting to J-Link")
+
+
 
 Après avoir exécuter le code sur VSCode, et connecter le J-Link, les traces seront affichées en commençant l’enregistrement sur l’interface graphique de SEGGER SystemView.
 
@@ -270,5 +274,3 @@ Pour que le servomoteur compile, s'exécute correctement et réalise les tâches
 
 The corresponding PWM pulse widths for a 0 to 180 degree range are 700 to 2300 microseconds, respectivel
 
-
-- Le code compile sans erreurs quand y a l'écran mais le servomoteur ne fonctionne pas, même s'il reçoit un signal (on entend un bruit)

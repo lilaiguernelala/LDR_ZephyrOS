@@ -67,7 +67,7 @@ Ce qu’il faut installer pour la réalisation de cette partie :
 Afin de pouvoir utiliser le J-Link pour programmer le STM32 sur une application externe. Il suffit de retirer les deux cavaliers de CN4 comme indiqué sur la Figure suivante et de connecter l'application au connecteur de débogage CN2 selon le Tableau suivant: 
 
 
-![image](https://github.com/user-attachments/assets/5b9930b9-c324-4e3a-9456-b1136f6f3bf7)
+![Tableau](/assets/images/Image4.jpg "Connexion")
 
 
 [!WARNING]

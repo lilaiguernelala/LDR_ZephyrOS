@@ -1,0 +1,362 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction &mdash; Documentation LDR ZephyrOS </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=d1a510d7"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=e6b791cb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="prev" title="Welcome to LDR ZephyrOS’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            LDR ZephyrOS
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#embarque">Embarqué</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#quest-ce-que-zephyr-os">Qu’est-ce que Zephyr OS ?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quest-ce-que-platformio">Qu’est-ce que PlatformIO ?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definition-du-tracing">Définition du Tracing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#les-etapes-a-suivre-pour-recuperer-des-traces-dun-code">Les étapes à suivre pour récupérer des traces d’un code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#a-quoi-servent-les-traces">A quoi servent les traces ?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#les-moyens-de-suivre-des-traces-d-un-code-embarque-sans-zephyros">Les moyens de suivre des traces d’un code embarqué sans ZephyrOS</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tableau-pour-ajouter-de-nouvelles-architectures-au-projet-platformio-autres-cartes-st-risc-v">Tableau pour ajouter de nouvelles architectures au projet PlatformIO : autres cartes ST, RISC-V</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#application-reelle">Application réelle</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LDR ZephyrOS</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/my-first-post.md.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Lien vers cette rubrique"></a></h1>
+<p>Dans le cadre des travaux de recherche menés au LDR sur les plateformes embarquées, les chercheurs souhaitent mettre en place des environnements de développements et de tests plus récents et robustes pour 2 applications en particulier, dans l’ordre d’importance :</p>
+<ul class="simple">
+<li><p>La programmation embarquée, en particulier avec OS Temps Réel.
+Mettre en place un environnement de dev/tests avec sondes logicielles pour le temps réel. Pour réaliser des tests de systèmes contraints, possiblement utilisant des architectures matérielles diverses (ARM, RISC-V, etc.), les chercheurs ont besoin d’un environnement clair, générant des traces analysables (quantité de mémoire utilisée, temps passé sur le processeur et lors des accès aux périphériques, décisions d’ordonnancement, etc.).</p></li>
+<li><p>Simulateur pour robotique/drone.
+Mettre en place un environnement de dev/tests avec, par exemple CoppeliaSim et Python/ROS, génération de scénario et récupération des données de vol et de l’environnement simulé.<br />
+Différents travaux sont réalisés depuis plusieurs années avec l’ONERA sur des simulations utilisant de drones. Ces travaux utilisent d’anciens simulateurs difficiles à maintenir aujourd’hui, ce qui rend complexe la reproduction de certains résultats. Plusieurs exemples existent pour des applications spécifiques, comme avec le robot Poppy et ROS.</p></li>
+</ul>
+<p>La documentation de la partie « Simulation » est disponible dans le dossier LDR_Simulation</p>
+</section>
+<section id="embarque">
+<h1>Embarqué<a class="headerlink" href="#embarque" title="Lien vers cette rubrique"></a></h1>
+<p>La première étape de cette partie consiste à mettre en place un code, à partir du code NoGUI vu en <a class="reference external" href="https://github.com/pcourbin-teaching/Zephyr_STM32">TP_Programmation temps réel</a> sur la carte ST STM32F429I Discovery avec ZephyrOS en se basant sur l’IDE PlatformIO qui :</p>
+<ul class="simple">
+<li><p>Récupère des traces simples de chaque thread.</p></li>
+<li><p>Exporte les données et les afficher sur SEGGER SystemView.</p></li>
+</ul>
+<section id="quest-ce-que-zephyr-os">
+<h2>Qu’est-ce que Zephyr OS ?<a class="headerlink" href="#quest-ce-que-zephyr-os" title="Lien vers cette rubrique"></a></h2>
+<p>Zephyr OS est un système d’exploitation temps réel open source. Il est reconnu pour sa légèreté, sa modularité et le fait qu’il supporte plusieurs plateformes, ce qui le rend adapté à une large gamme de microcontrôleurs. Avec une capacité à supporter plusieurs protocoles de communication.</p>
+<section id="quest-ce-que-platformio">
+<h3>Qu’est-ce que PlatformIO ?<a class="headerlink" href="#quest-ce-que-platformio" title="Lien vers cette rubrique"></a></h3>
+<p>PlatformIO est un IDE, son environnement de développement supporte le langage C/C++ pour les systèmes embarqués. Compatible avec plusieurs systèmes d’exploitation (Windows, Mac et Linux), il s’intègre également en tant qu’extension aux éditeurs de texte existants comme VSCode.</p>
+</section>
+<section id="definition-du-tracing">
+<h3>Définition du Tracing<a class="headerlink" href="#definition-du-tracing" title="Lien vers cette rubrique"></a></h3>
+<p>L’utilisation du tracing dans un système d’exploitation temps réel comme <strong>ZephyrOS</strong> est bénéfique car il permet d’analyser le comportement du système en temps réel en enregistrant les évènements tel que les changements de threads. Cela aide à identifier les bugs ainsi que les problèmes de performances.
+On peut également détecter les threads qui consomment trop de temps cela nous permet d’optimiser le système.</p>
+<p>Il nous permet de comprendre le comportement de threads entre eux, à quelle fréquence les ressources système sont utilisées, cela nous permet d’avoir un aperçu sur le fonctionnement interne du système
+Le tracing facilite l’analyse comparative et la reproductibilité des tests, on peut aussi vérifier si toutes les parties du code sont bien testées en conditions réelles</p>
+<section id="les-etapes-a-suivre-pour-recuperer-des-traces-dun-code">
+<h4>Les étapes à suivre pour récupérer des traces d’un code<a class="headerlink" href="#les-etapes-a-suivre-pour-recuperer-des-traces-dun-code" title="Lien vers cette rubrique"></a></h4>
+<ul class="simple">
+<li><p>Modifier le fichier .conf de notre projet NoGUI en ajoutant les lignes</p></li>
+</ul>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">CONFIG_TRACING</span><span class="o">=</span><span class="n">y</span>
+<span class="n">CONFIG_SEGGER_SYSTEMVIEW</span><span class="o">=</span><span class="n">y</span>
+<span class="n">CONFIG_SEGGER_SYSTEMVIEW_BOOT_ENABLE</span><span class="o">=</span><span class="n">n</span>
+<span class="n">CONFIG_SEGGER_SYSVIEW_POST_MORTEM_MODE</span><span class="o">=</span><span class="n">n</span>
+<span class="n">CONFIG_SEGGER_RTT_BUFFER_SIZE_UP</span><span class="o">=</span><span class="mi">4096</span>
+</pre></div>
+</div>
+<p>Zephyr utilise RTT (Real-Time Transfer) comme moyen de transport principal pour SystemView, dans ce cas l’exportation des traces nécessite toujours l’utilisation d’un appareil J-Link car ZephyrOS ne supporte pas actuellement l’exportation des traces via d’autres moyens comme l’UART ou le réseau, qui pourraient permettre une transmission directe sans hardware spécifique.</p>
+<p>D’où l’intérêt d’utiliser un <a class="reference external" href="https://fr.farnell.com/segger/8-08-91-j-link-edu-mini/unit-d-education-cortex-m/dp/3106578?gross_price=true&amp;amp;CMP=KNC-GFR-GEN-SHOPPING-Catch-All-GA4-Other-Channel-Audiences-Test-03-Nov-23&amp;amp;mckv=_dc%7Cpcrid%7C%7Cplid%7C%7Ckword%7C%7Cmatch%7C%7Cslid%7C%7Cproduct%7C3106578%7Cpgrid%7C%7Cptaid%7C&amp;amp;gad_source=1&amp;amp;gclid=Cj0KCQjw3tCyBhDBARIsAEY0XNlGYtov5E70cmn43-1cGxXln7vgYtljY4FBiqdjiT4U-VoNwqK6bkgaAnjHEALw_wcB">J-Link Segger EDU</a> pour pouvoir exporter les traces de chaque thread et les afficher sur SEGGER SystemView.</p>
+<ul class="simple">
+<li><p>Ce qu’il faut installer pour la réalisation de cette partie :</p></li>
+</ul>
+<p><strong><a class="reference external" href="https://www.segger.com/downloads/jlink/">J-Link software</a></strong></p>
+<p><strong><a class="reference external" href="https://www.segger.com/downloads/systemview/">SEGGER SystemView</a></strong></p>
+<p>Afin de pouvoir utiliser le J-Link pour programmer la STM32 sur une application externe. Il suffit de retirer les deux cavaliers de CN4 de la carte comme indiqué sur la figure suivante :</p>
+<p><img alt="Figure" src="_images/Image5.png" /></p>
+<p>Ensuite connecter l’application au connecteur de débogage CN2 selon le tableau suivant :</p>
+<p><img alt="Tableau" src="_images/Image4.png" /></p>
+<p>Source : <a class="reference internal" href="#chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.st.com/resource/en/user_manual/um1670-discovery-kit-with-stm32f429zi-mcu-stmicroelectronics.pdf"><span class="xref myst">User manual</span></a></p>
+<p>Après avoir brancher via un cable usb le J-Link, lancez l’application J-Link Commander V7.96e sur votre PC pour pouvoir se connecter au J-Link tout en laissant les paramêtres par défaut en cliquant sur “Entrée” (comme sur l’image en dessous) à chaque étape sauf une :</p>
+<ul class="simple">
+<li><p>Sélectionnez le protocole SWD pendant la connexion du J-Link</p></li>
+</ul>
+<p><img alt="Terminal configuration" src="_images/Image2.jpg" /></p>
+<p>Après avoir exécuter le code sur VSCode, et connecter le J-Link, les traces seront affichées en commençant l’enregistrement sur l’interface graphique de SEGGER SystemView. La figure suivante illustre un exemple de traces.</p>
+<p><img alt="SystemView traces" src="_images/Image1.png" /></p>
+</section>
+<section id="a-quoi-servent-les-traces">
+<h4>A quoi servent les traces ?<a class="headerlink" href="#a-quoi-servent-les-traces" title="Lien vers cette rubrique"></a></h4>
+<p>Dans notre code on a trois threads (2 LEDs et un switch), le traçage permet de :</p>
+<ul class="simple">
+<li><p>Surveiller quand et combien de fois chaque thread est exécuté, c’est important pour analyser le comportement des threads.</p></li>
+<li><p>Savoir par exemple la durée que prend chaque tâche pour exécuter une boucle, ou comment la pression du switch affecte le comportement des LEDs.</p></li>
+<li><p>Si on voit que la LED 1 par exemple monopolise les ressources plus que prévu, on peut jouer sur le nombre d’itérations ou sur la priorité des threads.</p></li>
+<li><p>Si un problème est détecté, on peut consulter les traces pour voir exactement ce qui se passait juste avant l’erreur</p></li>
+</ul>
+</section>
+<section id="les-moyens-de-suivre-des-traces-d-un-code-embarque-sans-zephyros">
+<h4>Les moyens de suivre des traces d’un code embarqué sans ZephyrOS<a class="headerlink" href="#les-moyens-de-suivre-des-traces-d-un-code-embarque-sans-zephyros" title="Lien vers cette rubrique"></a></h4>
+<ul class="simple">
+<li><p>Freertos SystemView peut être utilisé pour enregistrer des applications qui utilisent FreeRTOS V8, V9, V10 ou V11. Jusqu’à la V10, la source FreeRTOS doit être légèrement modifiée pour afficher correctement l’exécution de l’ordonnanceur FreeRTOS. A partir de la V11, aucune modification du noyau n’est nécessaire.</p></li>
+<li><p>TraceX présente les contraintes suivantes :
+TraceX ne peut pas mesurer avec précision les intervalles entre les événements supérieurs à la période de la minuterie.</p></li>
+</ul>
+<p><img alt="Traces sur TraceX" src="_images/Image3.png" /></p>
+</section>
+</section>
+<section id="tableau-pour-ajouter-de-nouvelles-architectures-au-projet-platformio-autres-cartes-st-risc-v">
+<h3>Tableau pour ajouter de nouvelles architectures au projet PlatformIO : autres cartes ST, RISC-V<a class="headerlink" href="#tableau-pour-ajouter-de-nouvelles-architectures-au-projet-platformio-autres-cartes-st-risc-v" title="Lien vers cette rubrique"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>RISC-V Boards</p></th>
+<th class="head"><p>Zephyr version</p></th>
+<th class="head"><p>Platformio</p></th>
+<th class="head"><p>Zephyr + PlatformIO</p></th>
+<th class="head"><p>Prix</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Seeed Studio XIAO ESP32C3</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p>5,96 €</p></td>
+</tr>
+<tr class="row-odd"><td><p>TTGO T-OI PLUS RISC-V ESP32-C3</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p>$5.50</p></td>
+</tr>
+<tr class="row-even"><td><p>Espressif ESP32-C3-DevKitM-1</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p>15,90 € TTC</p></td>
+</tr>
+<tr class="row-odd"><td><p>Espressif ESP32-C3-DevKitC-02</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p>23,66 €</p></td>
+</tr>
+<tr class="row-even"><td><p>DFRobot Beetle ESP32-C3</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p>10,50 € TTC</p></td>
+</tr>
+<tr class="row-odd"><td><p>GAPuino GAP8</p></td>
+<td><p>❌</p></td>
+<td><p>✅</p></td>
+<td><p>❌</p></td>
+<td><p>230 €</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Liens des documentations platformio de chacune des cartes précédentes</strong></p>
+<p><a class="reference external" href="https://docs.platformio.org/en/stable/boards/espressif32/seeed_xiao_esp32c3.html">Seeed Studio XIAO ESP32C3</a></p>
+<p><a class="reference external" href="https://docs.platformio.org/en/stable/boards/espressif32/ttgo-t-oi-plus.html">TTGO T-OI PLUS RISC-V ESP32-C3</a></p>
+<p><a class="reference external" href="https://docs.platformio.org/en/stable/boards/espressif32/esp32-c3-devkitm-1.html">Espressif ESP32-C3-DevKitM-1</a></p>
+<p><a class="reference external" href="https://docs.platformio.org/en/stable/boards/espressif32/esp32-c3-devkitc-02.html">Espressif ESP32-C3-DevKitC-02</a></p>
+<p><a class="reference external" href="https://docs.platformio.org/en/stable/boards/espressif32/dfrobot_beetle_esp32c3.html#dfrobot-beetle-esp32-c3">DFRobot Beetle ESP32-C3</a></p>
+<p><a class="reference external" href="https://docs.platformio.org/en/stable/boards/riscv_gap/gapuino.html">GAPuino GAP8 « Un kit orienté IA »</a></p>
+</section>
+<section id="application-reelle">
+<h3>Application réelle<a class="headerlink" href="#application-reelle" title="Lien vers cette rubrique"></a></h3>
+<p>Afin de tester de vraies données et les afficher sur SEGGER SystemView, nous avons mis en place un système simulant l’entrée d’un parking, où une barrière s’ouvre lorsqu’elle détecte un mouvement à 20 cm grâce à un capteur ultrason HCSR04. Si aucun mouvement n’est détecté, la barrière se referme. Ce système fonctionne avec le capteur ultrason HCSR04 et un ServoMoteur, tous deux connectés à la carte STM32.</p>
+<p><strong>Connexion du ServoMoteur à ZephyrOS</strong></p>
+<ul class="simple">
+<li><p>Le capteur ultrason HCSR04 n’utilise pas d’interface de communication telle que I2C ou UART, mais se connecte via des broches GPIO.
+Comme il n’existe pas encore de driver pour ce capteur spécifique dans ZephyrOS, il a été nécessaire de développer un module Zephyr personnalisé pour intégrer le HCSR04 au projet. Ce driver permet de capturer les impulsions ultrasonores émises et reçues, puis de calculer la distance en fonction du temps de retour de l’écho.</p></li>
+</ul>
+<p>à rajouter dans le fichier « overlay » du projet</p>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="nx">hcsr04</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">compatible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;elecfreaks,hc-sr04&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;HCSR04&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">trig</span><span class="o">-</span><span class="nx">gpios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&amp;</span><span class="nx">gpio0</span><span class="w"> </span><span class="mf">4</span><span class="w"> </span><span class="nx">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">echo</span><span class="o">-</span><span class="nx">gpios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&amp;</span><span class="nx">gpio0</span><span class="w"> </span><span class="mf">5</span><span class="w"> </span><span class="nx">GPIO_ACTIVE_HIGH</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;okay&quot;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>Connexion du ServoMoteur à ZephyrOS</strong></p>
+<p>En raison de l’utilisation de l’écran intégré, qui mobilise de nombreuses autres broches PWM et plusieurs timers. Il a donc été compliqué de localiser une broche PWM disponible, donc il faut d’abord trouver la bonne broche sur la carte STM32 pour assurer son bon fonctionnement en s’appuyant sur un timer non déjà utilisé par l’écran.</p>
+<ul class="simple">
+<li><p>Timer : TIM9</p></li>
+<li><p>Canal PWM : TIM9_CH2</p></li>
+<li><p>Broche : PE6</p></li>
+</ul>
+<p>Pour rajouter un servomoteur à notre projet zephyrOS</p>
+<ul class="simple">
+<li><p>créez un nouveau dossier dts/bindings et mettre dedans ce fichier .yaml :</p></li>
+</ul>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="nx">PWM</span><span class="o">-</span><span class="nx">driven</span><span class="w"> </span><span class="nx">servo</span><span class="w"> </span><span class="nx">motor</span><span class="p">.</span>
+
+<span class="nx">compatible</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;pwm-servo&quot;</span>
+
+<span class="nx">include</span><span class="o">:</span><span class="w"> </span><span class="nx">base</span><span class="p">.</span><span class="nx">yaml</span>
+
+<span class="nx">properties</span><span class="o">:</span>
+<span class="w">  </span><span class="nx">pwms</span><span class="o">:</span>
+<span class="w">    </span><span class="nx">required</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="nx">phandle</span><span class="o">-</span><span class="nx">array</span>
+<span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="nx">PWM</span><span class="w"> </span><span class="nx">specifier</span><span class="w"> </span><span class="nx">driving</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">servo</span><span class="w"> </span><span class="nx">motor</span><span class="p">.</span>
+
+<span class="w">  </span><span class="nx">min</span><span class="o">-</span><span class="nx">pulse</span><span class="o">:</span>
+<span class="w">    </span><span class="nx">required</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="kr">int</span>
+<span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="nx">Minimum</span><span class="w"> </span><span class="nx">pulse</span><span class="w"> </span><span class="nx">width</span><span class="w"> </span><span class="p">(</span><span class="nx">nanoseconds</span><span class="p">).</span>
+
+<span class="w">  </span><span class="nx">max</span><span class="o">-</span><span class="nx">pulse</span><span class="o">:</span>
+<span class="w">    </span><span class="nx">required</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">    </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="kr">int</span>
+<span class="w">    </span><span class="nx">description</span><span class="o">:</span><span class="w"> </span><span class="nx">Maximum</span><span class="w"> </span><span class="nx">pulse</span><span class="w"> </span><span class="nx">width</span><span class="w"> </span><span class="p">(</span><span class="nx">nanoseconds</span><span class="p">).</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>La largeur de répetition c’est 20ms elle est choisie 2500 et 700, c’est la durée qu’il prend sur chaque coté en microsecondes.</p></li>
+<li><p>On peut changer la valeur de la pulsation et celle de la largeur de répétition en fonction de la rapidité qu’on souhaite avoir.</p></li>
+<li><p>Dans le fichier .overlay compatible = « pwm-servo » on doit avoir le meme nom que sur le compatible de yaml</p></li>
+</ul>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="nx">servo</span><span class="o">:</span><span class="w"> </span><span class="nx">servo</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">compatible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;pwm-servo&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">pwms</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&amp;</span><span class="nx">pwm9</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="nx">PWM_MSEC</span><span class="p">(</span><span class="mf">20</span><span class="p">)</span><span class="w"> </span><span class="nx">PWM_POLARITY_NORMAL</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">min</span><span class="o">-</span><span class="nx">pulse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">PWM_USEC</span><span class="p">(</span><span class="mf">700</span><span class="p">)</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">max</span><span class="o">-</span><span class="nx">pulse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">PWM_USEC</span><span class="p">(</span><span class="mf">2500</span><span class="p">)</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+</pre></div>
+</div>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="nx">timers9</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;okay&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">st</span><span class="p">,</span><span class="nx">prescaler</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;</span><span class="mf">1000</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nx">pwm9</span><span class="o">:</span><span class="w"> </span><span class="nx">pwm</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;okay&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">pinctrl</span><span class="o">-</span><span class="mf">0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&lt;&amp;</span><span class="nx">tim9_ch2_pe6</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="w">        </span><span class="nx">pinctrl</span><span class="o">-</span><span class="nx">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;default&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Pour activer le PWM dans le fichier prj.conf se fait avec la ligne suivante: <code class="docutils literal notranslate"><span class="pre">CONFIG_PWM=y</span></code>
+Rajoutez cette bibliotheque #include &lt;zephyr/drivers/pwm.h&gt; dans le main principal</p>
+<p><strong>PS :</strong> Le nom de notre fichier overlay doit être le même que celui de notre board dans platformio.ini, ce n’est pas trop le même que celui de ZephyrOS</p>
+<ul class="simple">
+<li><p>Dans ZephyrOS : disco_f429zi</p></li>
+<li><p>Dans PlatformIO : stm32f429i_disc1</p></li>
+</ul>
+<p>Maintenant que le capteur HCSR04 et le ServoMoteur sont connectés et opérationnels, nous pouvons créer des tâches dans le code principal (main) pour les gérer. Ces tâches seront ensuite exportées et affichées sur SEGGER SystemView, permettant de récupérer des mesures et de les analyser.</p>
+<p><strong>Liens importants :</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/blob/v3.6-branch/samples/basic/servo_motor">Exemple d’un code servomoteur</a></p></li>
+<li><p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr">Exemple du PWM</a></p></li>
+<li><p><a class="reference external" href="https://docs.zephyrproject.org/latest/reference/drivers/pwm.html">Documentation du PWM</a></p></li>
+<li><p><a class="reference external" href="https://github.com/gd91/stm32_winc1500_station_example">Exemple de la connectivité wifi de la carte stm32</a></p></li>
+<li><p><a class="reference external" href="https://github.com/inductivekickback/hc-sr04/blob/main/nrf/drivers/sensor/hc_sr04/hc_sr04.c#L240">Création d’un driver hcsr04</a></p></li>
+<li><p><a class="reference external" href="https://github.com/zephyrproject-rtos/zephyr/discussions/53924">Lien pour l’overlay du servomoteur</a></p></li>
+<li><p><a class="reference external" href="https://stackoverflow.com/questions/12931115/algorithm-to-map-an-interval-to-a-smaller-interval">Formule du servomoteur</a></p></li>
+<li><p><a class="reference external" href="https://docs.zephyrproject.org/latest/samples/basic/servo_motor/README.html">DOC Zephyr</a></p></li>
+</ul>
+<p><strong>PS</strong> au moment de renommer un dossier, évitez les espaces ou caractères spéciaux</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to LDR ZephyrOS’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, IGUERNELALA Lila.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
